@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:programmes/pages/home.dart';
+import 'package:programmes/pages/navigation.dart';
 
 void main() => runApp(MaterialApp(
-  initialRoute: "/home",
+  initialRoute: "/navigation",
   routes: {
-    "/home": (context) => Home(),
+    "/navigation": (context) => Navigation(),
   },
 ));
