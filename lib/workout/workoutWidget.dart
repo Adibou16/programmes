@@ -12,9 +12,6 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
 
   List<ExerciseCard> exercises = [ExerciseCard(imageName: 'Bench Press', tableData: [[10, 10, 10], [8, 8, 8], [6, 6, 6]]),
                                   ExerciseCard(imageName: 'Back Squat', tableData: [[12, 12, 12], [10, 10, 10], [8, 8, 8]]),
-                                  ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5], [5, 5, 5], [5, 5, 5]]),
-                                  ExerciseCard(imageName: 'Bench Press', tableData: [[10, 10, 10], [8, 8, 8], [6, 6, 6]]),
-                                  ExerciseCard(imageName: 'Back Squat', tableData: [[12, 12, 12], [10, 10, 10], [8, 8, 8]]),
                                   ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5], [5, 5, 5], [5, 5, 5]])];
 
   @override
