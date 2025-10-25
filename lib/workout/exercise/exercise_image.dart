@@ -19,7 +19,7 @@ class _ExerciseImageWidgetState extends State<ExerciseImageWidget> {
       children: [
         Text(
           imageName,
-          style: TextStyle(color: Colors.grey[300]),
+          style: TextStyle(color: Colors.grey[300], fontSize: width * 0.035),
         ),
         Container(
           decoration: BoxDecoration(

@@ -6,6 +6,6 @@ import 'package:programmes/workout/workoutWidget.dart';
 void main() => runApp(MaterialApp(
   initialRoute: "/navigation",
   routes: {
-    "/navigation": (context) => const Navigation(),
+    "/navigation": (context) => const WorkoutWidget(),
   },
 ));

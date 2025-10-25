@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:programmes/workout/exercise/weight_input.dart';
+import 'package:programmes/workout/workout.dart';
 
 class ExerciseTableWidget extends StatefulWidget {
   final List<List<int>> tableData;
@@ -81,18 +83,7 @@ class _ExerciseTableWidgetState extends State<ExerciseTableWidget> {
               ),
             ),
         // Last column with TextField
-        TextField(
-          style: TextStyle(color: Colors.blue[600], fontSize: dataStyle.fontSize),
-          keyboardType: TextInputType.number,
-          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-          decoration: InputDecoration(
-            isDense: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6.0),
-            hintText: "poids (lbs)",
-            hintStyle: dataStyle,
-            border: InputBorder.none,
-          ),
-        ),
+        const WeightInput()
       ],
     );
   }
