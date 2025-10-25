@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:programmes/widgets/exercice.dart';
+import 'package:programmes/workout/workoutWidget.dart';
 
 class SelectWorkout extends StatelessWidget {
+  const SelectWorkout({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Card (
@@ -14,7 +16,7 @@ class SelectWorkout extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Exercice()),
+            MaterialPageRoute(builder: (context) => const WorkoutWidget()),
           );
         },
       ),
