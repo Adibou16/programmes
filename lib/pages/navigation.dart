@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:programmes/pages/home.dart';
 import 'package:programmes/pages/new_workout.dart';
 import 'package:programmes/pages/profile.dart';
-import 'package:programmes/pages/new_workout.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
