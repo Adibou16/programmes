@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
 
 class WorkoutWidget extends StatefulWidget {
-  const WorkoutWidget({super.key});
+  final List<ExerciseCard> exercises;
+
+  const WorkoutWidget({super.key, required this.exercises});
 
   @override
   State<WorkoutWidget> createState() => _WorkoutWidgetState();
 }
 
 class _WorkoutWidgetState extends State<WorkoutWidget> {
-
-  List<ExerciseCard> exercises = [ExerciseCard(imageName: 'Bench Press', tableData: [[10, 10, 10], [8, 8, 8], [6, 6, 6]]),
-                                  ExerciseCard(imageName: 'Back Squat', tableData: [[12, 12, 12], [10, 10, 10], [8, 8, 8]]),
-                                  ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5], [5, 5, 5], [5, 5, 5]])];
-
   @override
+
   Widget build(BuildContext context) {
+    final exercises = widget.exercises;
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Workout"),

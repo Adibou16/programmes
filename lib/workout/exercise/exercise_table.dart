@@ -83,6 +83,11 @@ class _ExerciseTableWidgetState extends State<ExerciseTableWidget> {
         // Last column with TextField
         TextField(
           style: TextStyle(color: Colors.blue[600], fontSize: dataStyle.fontSize),
+
+          controller: TextEditingController(
+            text: cells[3] != 0 ? cells[3].toString() : '',
+          ),
+
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
           decoration: InputDecoration(
