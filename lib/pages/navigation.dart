@@ -12,9 +12,9 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
-  static List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
     const Home(),
-    NewWorkout(),
+    const NewWorkout(),
     const Profile(),
   ];
 
