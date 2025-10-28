@@ -59,10 +59,8 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
           IconButton(
             icon: const Icon(Icons.delete, color: Colors.red),
             onPressed: () {
-              setState(() {
-                boxWorkouts.deleteAt(workoutIndex);
-                Navigator.pop(context);
-              });
+              Navigator.pop(context);
+              boxWorkouts.deleteAt(workoutIndex);
             },
           ),
         ],
