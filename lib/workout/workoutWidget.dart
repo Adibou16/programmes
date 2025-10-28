@@ -5,8 +5,9 @@ import 'package:programmes/workout/exercise/exercise_card.dart';
 class WorkoutWidget extends StatefulWidget {
   final List<ExerciseCard> exercises;
   final int workoutIndex;
+  final String name;
 
-  const WorkoutWidget({super.key, required this.exercises, required this.workoutIndex});
+  const WorkoutWidget({super.key, required this.exercises, required this.workoutIndex, required this.name});
 
   @override
   State<WorkoutWidget> createState() => _WorkoutWidgetState();
@@ -18,10 +19,11 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
   Widget build(BuildContext context) {
     final exercises = widget.exercises;
     final workoutIndex = widget.workoutIndex;
+    final name = widget.name;
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Workout"),
+        title: Text(name),
         backgroundColor: Colors.grey[850],
         centerTitle: true,
         titleTextStyle: const TextStyle(
@@ -44,7 +46,12 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
                   elevation: 0,
                   clipBehavior: Clip.antiAlias,
                   color: Colors.grey[900],
-                  child: exercises[index]
+                  child: ExerciseCard(
+                    imageName: exercises[index].imageName,
+                    tableData: exercises[index].tableData,
+                    workoutIndex: workoutIndex,
+                    exerciseIndex: index,
+                  ),
                 );
               },
             ),

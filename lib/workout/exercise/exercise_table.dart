@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:programmes/database/boxes.dart';
 
-class ExerciseTableWidget extends StatefulWidget {
-  final List<List<int>> tableData;
-  const ExerciseTableWidget({super.key, required this.tableData});
+// ignore: must_be_immutable
+class ExerciseTable extends StatefulWidget {
+  List<List<int>> tableData;
+  final int? workoutIndex;
+  final int? exerciseIndex;
+  ExerciseTable({super.key, required this.tableData, this.workoutIndex, this.exerciseIndex});
 
   @override
-  State<ExerciseTableWidget> createState() => _ExerciseTableWidgetState();
+  State<ExerciseTable> createState() => _ExerciseTableState();
 }
 
-class _ExerciseTableWidgetState extends State<ExerciseTableWidget> {
-  @override
+class _ExerciseTableState extends State<ExerciseTable> {
 
+  @override
   Widget build(BuildContext context) {
     final headers = ["Séries", "Répétitions", "Repos", "Charge"];
-    final tableData = widget.tableData;
+    List<List<int>> tableData = widget.tableData;
     final width = MediaQuery.of(context).size.width;
     final titleStyle = TextStyle(color: Colors.grey[300], fontSize: width * 0.035);
     final headingStyle = TextStyle(color: Colors.grey[350], fontWeight: FontWeight.bold, fontSize: width * 0.03);
@@ -57,7 +61,7 @@ class _ExerciseTableWidgetState extends State<ExerciseTableWidget> {
                 ),
                 // Data rows 
                 for (var i = 0; i < tableData.length; i++)
-                  buildDataRow(tableData[i], dataStyle),
+                  buildDataRow(tableData[i], dataStyle, i),
               ],
             );
           }),
@@ -66,9 +70,17 @@ class _ExerciseTableWidgetState extends State<ExerciseTableWidget> {
     }
 
   // Data row builder 
-  TableRow buildDataRow(List<int> cells, TextStyle dataStyle) {
+  TableRow buildDataRow(List<int> cells, TextStyle dataStyle, int rowIndex) {
+    
+    // Build controller
+    final weight = (widget.workoutIndex != null && widget.exerciseIndex != null)
+        ? boxWorkouts.getAt(widget.workoutIndex!).exercises[widget.exerciseIndex].tableData[rowIndex][3]
+        : 0;
+    final rowController = TextEditingController(text: weight != 0 ? weight.toString() : '');
+
     return TableRow(
       children: [
+        
         // First three columns
         for (var i = 0; i < 3; i++)
             Center(
@@ -80,14 +92,11 @@ class _ExerciseTableWidgetState extends State<ExerciseTableWidget> {
                 maxLines: 1,
               ),
             ),
+
         // Last column with TextField
         TextField(
+          controller: rowController,
           style: TextStyle(color: Colors.blue[600], fontSize: dataStyle.fontSize),
-
-          controller: TextEditingController(
-            text: cells[3] != 0 ? cells[3].toString() : '',
-          ),
-
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
           decoration: InputDecoration(
@@ -97,6 +106,17 @@ class _ExerciseTableWidgetState extends State<ExerciseTableWidget> {
             hintStyle: dataStyle,
             border: InputBorder.none,
           ),
+
+          onChanged: (value) {
+            final int newVal = int.tryParse(value) ?? 0;
+            if (widget.workoutIndex == null || widget.exerciseIndex == null) return;
+            final workout = boxWorkouts.getAt(widget.workoutIndex!);
+            final ex = workout.exercises[widget.exerciseIndex];
+
+            ex.tableData[rowIndex][3] = newVal;
+            workout.exercises[widget.exerciseIndex] = ex;
+            boxWorkouts.putAt(widget.workoutIndex!, workout);
+          },
         ),
       ],
     );
