@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:programmes/workout/exercise/exercise_image.dart';
 import 'package:programmes/workout/exercise/exercise_table.dart';
 
+part 'exercise_card.g.dart';
+
+@HiveType(typeId: 1)
 class ExerciseCard extends StatefulWidget {
+  @HiveField(0)
   final String imageName;
+
+  @HiveField(1)
   final List<List<int>> tableData;
 
-  const ExerciseCard({super.key, required this.imageName, required this.tableData});
+  final int? workoutIndex;
+  final int? exerciseIndex;
+
+  const ExerciseCard({super.key, required this.imageName, required this.tableData, this.workoutIndex, this.exerciseIndex});
 
   @override
   State<ExerciseCard> createState() => _ExerciseCardState();
@@ -31,7 +41,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
-            child: ExerciseTableWidget(tableData: tableData),
+            child: ExerciseTable(tableData: tableData, workoutIndex: widget.workoutIndex, exerciseIndex: widget.exerciseIndex),
           ),
         )
       ],

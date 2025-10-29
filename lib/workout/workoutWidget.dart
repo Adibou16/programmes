@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:programmes/database/boxes.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
 
 class WorkoutWidget extends StatefulWidget {
-  const WorkoutWidget({super.key});
+  final List<ExerciseCard> exercises;
+  final int workoutIndex;
+  final String name;
+
+  const WorkoutWidget({super.key, required this.exercises, required this.workoutIndex, required this.name});
 
   @override
   State<WorkoutWidget> createState() => _WorkoutWidgetState();
 }
 
 class _WorkoutWidgetState extends State<WorkoutWidget> {
-
-  List<ExerciseCard> exercises = [ExerciseCard(imageName: 'Bench Press', tableData: [[10, 10, 10], [8, 8, 8], [6, 6, 6]]),
-                                  ExerciseCard(imageName: 'Back Squat', tableData: [[12, 12, 12], [10, 10, 10], [8, 8, 8]]),
-                                  ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5], [5, 5, 5], [5, 5, 5]]),
-                                  ExerciseCard(imageName: 'Bench Press', tableData: [[10, 10, 10], [8, 8, 8], [6, 6, 6]]),
-                                  ExerciseCard(imageName: 'Back Squat', tableData: [[12, 12, 12], [10, 10, 10], [8, 8, 8]]),
-                                  ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5], [5, 5, 5], [5, 5, 5]])];
-
   @override
+
   Widget build(BuildContext context) {
+    final exercises = widget.exercises;
+    final workoutIndex = widget.workoutIndex;
+    final name = widget.name;
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Workout"),
+        title: Text(name),
         backgroundColor: Colors.grey[850],
         centerTitle: true,
         titleTextStyle: const TextStyle(
@@ -33,17 +35,35 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
 
       backgroundColor: Colors.black,
 
-      body: ListView.builder(
-        itemCount: exercises.length,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 0,
-            clipBehavior: Clip.antiAlias,
-            color: Colors.grey[900],
-            child: exercises[index]
-          );
-        },
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: exercises.length,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 0,
+                  clipBehavior: Clip.antiAlias,
+                  color: Colors.grey[900],
+                  child: ExerciseCard(
+                    imageName: exercises[index].imageName,
+                    tableData: exercises[index].tableData,
+                    workoutIndex: workoutIndex,
+                    exerciseIndex: index,
+                  ),
+                );
+              },
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete, color: Colors.red),
+            onPressed: () {
+              Navigator.pop(context);
+              boxWorkouts.deleteAt(workoutIndex);
+            },
+          ),
+        ],
       ),
     );
   }

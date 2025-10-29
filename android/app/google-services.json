@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "706687409855",
+    "project_id": "programmes-cebb0",
+    "storage_bucket": "programmes-cebb0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:706687409855:android:b7b4ab16a654c3acd7300a",
+        "android_client_info": {
+          "package_name": "com.example.programmes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMT_PAle2oEMnf8oDSv781CnqiRqqjCVY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
