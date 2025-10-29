@@ -13,10 +13,11 @@ class NewWorkout extends StatefulWidget {
 class _NewWorkoutState extends State<NewWorkout> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+
   List<ExerciseCard> exercisesExample = [
-      const ExerciseCard(imageName: 'Bench Press', tableData: [[10, 10, 10, 0], [8, 8, 8, 0], [6, 6, 6, 0]]),
-      const ExerciseCard(imageName: 'Back Squat', tableData: [[12, 12, 12, 0], [10, 10, 10, 0], [8, 8, 8, 0]]),
-      const ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5, 0], [5, 5, 5, 0], [5, 5, 5, 0]])
+      ExerciseCard(imageName: 'Bench Press', tableData: [[12, 12, 12, 0], [10, 10, 10, 0], [8, 8, 8, 0]]),
+      ExerciseCard(imageName: 'Back Squat', tableData: [[10, 10, 10, 0], [8, 8, 8, 0], [6, 6, 6, 0]]),
+      ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5, 0], [5, 5, 5, 0], [5, 5, 5, 0]])
       ];
 
   @override
@@ -64,7 +65,6 @@ class _NewWorkoutState extends State<NewWorkout> {
                     exercises: exercisesExample)
                 );
               });
-              print('Workout Created: ${titleController.text}');
             },
             style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blue)),
             child: const Text(

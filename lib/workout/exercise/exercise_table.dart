@@ -108,14 +108,21 @@ class _ExerciseTableState extends State<ExerciseTable> {
           ),
 
           onChanged: (value) {
-            final int newVal = int.tryParse(value) ?? 0;
-            if (widget.workoutIndex == null || widget.exerciseIndex == null) return;
-            final workout = boxWorkouts.getAt(widget.workoutIndex!);
-            final ex = workout.exercises[widget.exerciseIndex];
+            try {
+              final int newVal = int.tryParse(value) ?? 0;
 
-            ex.tableData[rowIndex][3] = newVal;
-            workout.exercises[widget.exerciseIndex] = ex;
-            boxWorkouts.putAt(widget.workoutIndex!, workout);
+              if (widget.workoutIndex == null || widget.exerciseIndex == null) return;
+
+              final workout = boxWorkouts.getAt(widget.workoutIndex!);
+              final ex = workout.exercises[widget.exerciseIndex];
+              ex.tableData[rowIndex][3] = newVal;
+              
+              workout.exercises[widget.exerciseIndex] = ex;
+              boxWorkouts.putAt(widget.workoutIndex!, workout);
+            }
+            catch (e) {
+              print("ERROR: $e");
+            }
           },
         ),
       ],
