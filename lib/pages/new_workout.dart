@@ -14,10 +14,10 @@ class _NewWorkoutState extends State<NewWorkout> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  List<ExerciseCard> exercisesExample = [
-      ExerciseCard(imageName: 'Bench Press', tableData: [[12, 12, 12, 0], [10, 10, 10, 0], [8, 8, 8, 0]]),
-      ExerciseCard(imageName: 'Back Squat', tableData: [[10, 10, 10, 0], [8, 8, 8, 0], [6, 6, 6, 0]]),
-      ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5, 0], [5, 5, 5, 0], [5, 5, 5, 0]])
+  List<ExerciseCard> hyperthropie1 = [
+      ExerciseCard(imageName: 'Chin Ups', tableData: [[3, 10, 120, 0], [3, 12, 120, 0], [3, 12, 120, 0], [3, 8, 120, 0]]),
+      ExerciseCard(imageName: 'Gorilla Pull', tableData: [[3, 8, 120, 0], [3, 8, 120, 0], [3, 8, 120, 0], [3, 8, 120, 0]]),
+      ExerciseCard(imageName: 'Russian Twist', tableData: [[3, 20, 60, 0], [3, 20, 60, 0], [3, 20, 60, 0], [3, 20, 60, 0]])
       ];
 
   @override
@@ -62,7 +62,7 @@ class _NewWorkoutState extends State<NewWorkout> {
                   Workout(
                     title: titleController.text, 
                     description: descriptionController.text, 
-                    exercises: exercisesExample)
+                    exercises: hyperthropie1)
                 );
               });
             },
