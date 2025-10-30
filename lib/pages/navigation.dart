@@ -19,9 +19,9 @@ class _NavigationState extends State<Navigation> {
     const Profile(),
   ];
 
-  void _onItemTapped(int index) {
+  void _onItemTapped(int index) async {
     if (index == 1) {
-      Navigator.push(
+      await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const NewWorkout()),
       );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:programmes/database/boxes.dart';
 import 'package:programmes/database/workout.dart';
+import 'package:programmes/pages/navigation.dart';
 import 'package:programmes/widgets/image_gallery.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
 
@@ -76,8 +77,12 @@ class _NewWorkoutState extends State<NewWorkout> {
                     description: descriptionController.text, 
                     exercises: [ExerciseCard(imagePath: imagePath, tableData: [[3, 10, 120, 0], [3, 12, 120, 0], [3, 12, 120, 0], [3, 8, 120, 0]])])
                 );
-                Navigator.pop(context);
               });
+              Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(builder: (context) => Navigation()),
+                ModalRoute.withName('/')
+              );
             },
             style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blue)),
             child: const Text(
