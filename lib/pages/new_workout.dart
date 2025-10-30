@@ -26,6 +26,16 @@ class _NewWorkoutState extends State<NewWorkout> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: const Text('Nouveau workout'),
+        backgroundColor: Colors.grey[850],
+        centerTitle: true,
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -66,6 +76,7 @@ class _NewWorkoutState extends State<NewWorkout> {
                     description: descriptionController.text, 
                     exercises: [ExerciseCard(imagePath: imagePath, tableData: [[3, 10, 120, 0], [3, 12, 120, 0], [3, 12, 120, 0], [3, 8, 120, 0]])])
                 );
+                Navigator.pop(context);
               });
             },
             style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blue)),

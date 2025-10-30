@@ -11,18 +11,6 @@ Future<void> main() async {
   Hive.registerAdapter(ExerciseCardAdapter());
   boxWorkouts = await Hive.openBox<Workout>('workoutBox');
 
-  // boxWorkouts.put('key_Example', 
-  //   Workout(
-  //     title: 'Workout Example 1', 
-  //     description: 'Description du workout 1', 
-  //     exercises: [
-  //       const ExerciseCard(imageName: 'Bench Press', tableData: [[10, 10, 10, 0], [8, 8, 8, 0], [6, 6, 6, 0]]),
-  //       const ExerciseCard(imageName: 'Back Squat', tableData: [[12, 12, 12, 0], [10, 10, 10, 0], [8, 8, 8, 0]]),
-  //       const ExerciseCard(imageName: 'Deadlift', tableData: [[5, 5, 5, 0], [5, 5, 5, 0], [5, 5, 5, 0]])
-  //       ]
-  //     )
-  //   );
-
   runApp(MaterialApp(
     initialRoute: "/navigation",
     routes: {
