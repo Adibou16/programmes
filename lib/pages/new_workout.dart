@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:programmes/database/boxes.dart';
 import 'package:programmes/database/workout.dart';
+import 'package:programmes/widgets/image_gallery.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
 
 class NewWorkout extends StatefulWidget {
@@ -13,12 +14,13 @@ class NewWorkout extends StatefulWidget {
 class _NewWorkoutState extends State<NewWorkout> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  String imagePath = 'exercise_images/Back Squat.jpg';
 
-  List<ExerciseCard> hyperthropie1 = [
-      ExerciseCard(imageName: 'Chin Ups', tableData: [[3, 10, 120, 0], [3, 12, 120, 0], [3, 12, 120, 0], [3, 8, 120, 0]]),
-      ExerciseCard(imageName: 'Gorilla Pull', tableData: [[3, 8, 120, 0], [3, 8, 120, 0], [3, 8, 120, 0], [3, 8, 120, 0]]),
-      ExerciseCard(imageName: 'Russian Twist', tableData: [[3, 20, 60, 0], [3, 20, 60, 0], [3, 20, 60, 0], [3, 20, 60, 0]])
-      ];
+  // List<ExerciseCard> hyperthropie1 = [
+  //     ExerciseCard(imageName: 'Chin Ups', tableData: [[3, 10, 120, 0], [3, 12, 120, 0], [3, 12, 120, 0], [3, 8, 120, 0]]),
+  //     ExerciseCard(imageName: 'Gorilla Pull', tableData: [[3, 8, 120, 0], [3, 8, 120, 0], [3, 8, 120, 0], [3, 8, 120, 0]]),
+  //     ExerciseCard(imageName: 'Russian Twist', tableData: [[3, 20, 60, 0], [3, 20, 60, 0], [3, 20, 60, 0], [3, 20, 60, 0]])
+  //     ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +64,29 @@ class _NewWorkoutState extends State<NewWorkout> {
                   Workout(
                     title: titleController.text, 
                     description: descriptionController.text, 
-                    exercises: hyperthropie1)
+                    exercises: [ExerciseCard(imagePath: imagePath, tableData: [[3, 10, 120, 0], [3, 12, 120, 0], [3, 12, 120, 0], [3, 8, 120, 0]])])
                 );
               });
             },
             style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blue)),
             child: const Text(
-              'Create Example Workout',
+              'Créer nouveau workout',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ),
+
+          TextButton(
+            onPressed: () async {
+              imagePath = await Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => const ImageGallery()));
+            },
+            style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blue)),
+            child: const Text(
+              'Choisir Image',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,

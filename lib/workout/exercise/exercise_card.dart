@@ -8,7 +8,7 @@ part 'exercise_card.g.dart';
 @HiveType(typeId: 1)
 class ExerciseCard extends StatefulWidget {
   @HiveField(0)
-  final String imageName;
+  final String imagePath;
 
   @HiveField(1)
   final List<List<int>> tableData;
@@ -16,7 +16,7 @@ class ExerciseCard extends StatefulWidget {
   final int? workoutIndex;
   final int? exerciseIndex;
 
-  const ExerciseCard({super.key, required this.imageName, required this.tableData, this.workoutIndex, this.exerciseIndex});
+  const ExerciseCard({super.key, required this.imagePath, required this.tableData, this.workoutIndex, this.exerciseIndex});
 
   @override
   State<ExerciseCard> createState() => _ExerciseCardState();
@@ -26,7 +26,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
   @override
 
   Widget build(BuildContext context) {
-    final String imageName = widget.imageName;
+    final String imagePath = widget.imagePath;
     final List<List<int>> tableData = widget.tableData;
 
     return Row(
@@ -35,7 +35,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
 
         Padding(
           padding: const EdgeInsets.all(10.0),
-          child: ExerciseImageWidget(imageName: imageName),
+          child: ExerciseImageWidget(imagePath: imagePath),
         ),
 
         Expanded(

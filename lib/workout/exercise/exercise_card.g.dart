@@ -17,7 +17,7 @@ class ExerciseCardAdapter extends TypeAdapter<ExerciseCard> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ExerciseCard(
-      imageName: fields[0] as String,
+      imagePath: fields[0] as String,
       tableData: (fields[1] as List)
           .map((dynamic e) => (e as List).cast<int>())
           .toList(),
@@ -29,7 +29,7 @@ class ExerciseCardAdapter extends TypeAdapter<ExerciseCard> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.imageName)
+      ..write(obj.imagePath)
       ..writeByte(1)
       ..write(obj.tableData);
   }

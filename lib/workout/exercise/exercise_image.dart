@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+
+
 class ExerciseImageWidget extends StatefulWidget {
-  final String imageName;
-  const ExerciseImageWidget({super.key, required this.imageName});
+  final String imagePath;
+  const ExerciseImageWidget({super.key, required this.imagePath});
 
   @override
   State<ExerciseImageWidget> createState() => _ExerciseImageWidgetState();
@@ -11,8 +13,8 @@ class ExerciseImageWidget extends StatefulWidget {
 class _ExerciseImageWidgetState extends State<ExerciseImageWidget> {
   @override
   Widget build(BuildContext context) {
-    String imageName = widget.imageName;
-    String imagePath = 'exercise_images/$imageName.jpg';
+    String imagePath = widget.imagePath;
+    String imageName = imagePath.split('/').last.split('.').first;
     double width = MediaQuery.of(context).size.width;
 
     return Column(

@@ -47,7 +47,7 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
                   clipBehavior: Clip.antiAlias,
                   color: Colors.grey[900],
                   child: ExerciseCard(
-                    imageName: exercises[index].imageName,
+                    imagePath: exercises[index].imagePath,
                     tableData: exercises[index].tableData,
                     workoutIndex: workoutIndex,
                     exerciseIndex: index,
