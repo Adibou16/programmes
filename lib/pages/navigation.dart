@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:programmes/new_workout/new_workout_first.dart';
 import 'package:programmes/pages/home.dart';
-import 'package:programmes/new_workout/new_workout.dart';
 import 'package:programmes/pages/profile.dart';
 
 class Navigation extends StatefulWidget {
@@ -23,7 +23,7 @@ class _NavigationState extends State<Navigation> {
     if (index == 1) {
       await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const NewWorkout()),
+        MaterialPageRoute(builder: (context) => const NewWorkoutFirst()),
       );
     } else {
       setState(() {

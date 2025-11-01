@@ -76,6 +76,8 @@ class _ImageGalleryState extends State<ImageGallery> {
                 Navigator.pop(context, imagePaths[index]);
               },
             );
+          } else {
+            return Container();
           }
         },
       ),

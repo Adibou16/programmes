@@ -5,7 +5,8 @@ import 'dart:convert';
 
 
 class NewExerciseImage extends StatefulWidget {
-  const NewExerciseImage({super.key});
+  final Function(String)? onImageSelected;
+  const NewExerciseImage({super.key, this.onImageSelected});
 
   @override
   State<NewExerciseImage> createState() => _NewExerciseImageState();
@@ -27,8 +28,6 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
     final manifestContent = await rootBundle.loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
 
-
-    // Extract all image file paths that start with the given directory
     final paths = manifestMap.keys
         .where((String key) => key.startsWith(assetDir))
         .toList();
@@ -47,7 +46,7 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
           controller: nameController,
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            constraints: BoxConstraints(maxWidth: width * 0.25),
+            constraints: BoxConstraints(maxWidth: width * 0.35),
             labelText: 'Nom',
             isDense: true,
             labelStyle: TextStyle(color: Colors.grey[400]),
@@ -59,7 +58,6 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
             ),
           ),
           onEditingComplete: () {
-            print('SUBMITTED');
             if (imagePath == 'exercise_images/null.jpg') {
               for (var i = 0; i < imagePaths.length; i++) {
                 if (nameController.text.toLowerCase() == imagePaths[i].split('/').last.split('.').first.toLowerCase()) {
@@ -85,12 +83,13 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
             MaterialPageRoute(builder: (context) => const ImageGallery()));
 
             if (newPath != null && mounted) {
-              if (nameController.text.trim().isEmpty) {
                 setState(() {
                   imagePath = newPath;
-                  nameController.text = imagePath.split('/').last.split('.').first;
+                  if (nameController.text.trim().isEmpty) {
+                    nameController.text = imagePath.split('/').last.split('.').first;
+                  }
+                  widget.onImageSelected?.call(newPath);
                 });
-              }
             }
           },
 
@@ -101,8 +100,8 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
               fit: BoxFit.cover,
             ),
           ),
-          width: width * 0.25,
-          height: width * 0.25,
+          width: width * 0.3,
+          height: width * 0.3,
           child: Icon(
             Icons.image_search, 
             color: Colors.white, 
