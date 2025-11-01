@@ -40,18 +40,13 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
           Expanded(
             child: ListView.builder(
               itemCount: exercises.length,
-              physics: const BouncingScrollPhysics(),
+              physics: const PageScrollPhysics(),
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 0,
-                  clipBehavior: Clip.antiAlias,
-                  color: Colors.grey[900],
-                  child: ExerciseCard(
-                    imagePath: exercises[index].imagePath,
-                    tableData: exercises[index].tableData,
-                    workoutIndex: workoutIndex,
-                    exerciseIndex: index,
-                  ),
+                return ExerciseCard(
+                  imagePath: exercises[index].imagePath,
+                  tableData: exercises[index].tableData,
+                  workoutIndex: workoutIndex,
+                  exerciseIndex: index,
                 );
               },
             ),

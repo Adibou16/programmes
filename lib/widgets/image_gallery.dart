@@ -59,22 +59,24 @@ class _ImageGalleryState extends State<ImageGallery> {
         ),
         itemCount: imagePaths.length,
         itemBuilder: (context, index) {
-          return IconButton(
-            padding: EdgeInsets.zero,
-            iconSize: double.infinity,
-            icon: AspectRatio(
-              aspectRatio: 1,
-              child: ClipRRect(
-                child: Image.asset(
-                  imagePaths[index],
-                  fit: BoxFit.cover,
+          if (imagePaths[index] != 'exercise_images/null.jpg') {
+            return IconButton(
+              padding: EdgeInsets.zero,
+              iconSize: double.infinity,
+              icon: AspectRatio(
+                aspectRatio: 1,
+                child: ClipRRect(
+                  child: Image.asset(
+                    imagePaths[index],
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            onPressed: () {
-              Navigator.pop(context, imagePaths[index]);
-            },
-          );
+              onPressed: () {
+                Navigator.pop(context, imagePaths[index]);
+              },
+            );
+          }
         },
       ),
     );

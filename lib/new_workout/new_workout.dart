@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:programmes/database/boxes.dart';
 import 'package:programmes/database/workout.dart';
+import 'package:programmes/new_workout/new_exercise_card.dart';
+import 'package:programmes/new_workout/new_exercise_table.dart';
 import 'package:programmes/pages/navigation.dart';
-import 'package:programmes/widgets/image_gallery.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
 
 class NewWorkout extends StatefulWidget {
@@ -37,8 +38,9 @@ class _NewWorkoutState extends State<NewWorkout> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+
+      body: ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           TextField(
             controller: titleController,
@@ -54,6 +56,7 @@ class _NewWorkoutState extends State<NewWorkout> {
               ),
             ),
           ),
+
           TextField(
             controller: descriptionController,
             style: const TextStyle(color: Colors.white),
@@ -68,6 +71,13 @@ class _NewWorkoutState extends State<NewWorkout> {
               ),
             ),
           ),
+
+          const NewExerciseCard(),
+          const NewExerciseCard(),
+          const NewExerciseCard(),
+          const NewExerciseCard(),
+          const NewExerciseCard(),
+
           TextButton(
             onPressed: () {
               setState(() {
@@ -93,24 +103,24 @@ class _NewWorkoutState extends State<NewWorkout> {
               ),
             ),
           ),
-
-          TextButton(
-            onPressed: () async {
-              imagePath = await Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (context) => const ImageGallery()));
-            },
-            style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blue)),
-            child: const Text(
-              'Choisir Image',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
 }
+
+          // TextButton(
+          //   onPressed: () async {
+          //     imagePath = await Navigator.push(
+          //       context, 
+          //       MaterialPageRoute(builder: (context) => const ImageGallery()));
+          //   },
+          //   style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blue)),
+          //   child: const Text(
+          //     'Choisir Image',
+          //     style: TextStyle(
+          //       color: Colors.white,
+          //       fontSize: 20,
+          //     ),
+          //   ),
+          // ),

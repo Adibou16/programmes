@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 
 
-class ExerciseImageWidget extends StatefulWidget {
+class ExerciseImage extends StatefulWidget {
   final String imagePath;
-  const ExerciseImageWidget({super.key, required this.imagePath});
+  const ExerciseImage({super.key, required this.imagePath});
 
   @override
-  State<ExerciseImageWidget> createState() => _ExerciseImageWidgetState();
+  State<ExerciseImage> createState() => _ExerciseImageState();
 }
 
-class _ExerciseImageWidgetState extends State<ExerciseImageWidget> {
+class _ExerciseImageState extends State<ExerciseImage> {
   @override
   Widget build(BuildContext context) {
     String imagePath = widget.imagePath;

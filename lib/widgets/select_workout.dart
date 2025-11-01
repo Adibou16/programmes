@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:programmes/database/boxes.dart';
-import 'package:programmes/workout/workoutWidget.dart';
+import 'package:programmes/workout/workout_widget.dart';
 import 'package:programmes/database/workout.dart';
 
 

@@ -29,22 +29,27 @@ class _ExerciseCardState extends State<ExerciseCard> {
     final String imagePath = widget.imagePath;
     final List<List<int>> tableData = widget.tableData;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: ExerciseImageWidget(imagePath: imagePath),
-        ),
-
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
-            child: ExerciseTable(tableData: tableData, workoutIndex: widget.workoutIndex, exerciseIndex: widget.exerciseIndex),
+    return Card(
+      elevation: 0,
+      clipBehavior: Clip.antiAlias,
+      color: Colors.grey[900],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+      
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: ExerciseImage(imagePath: imagePath),
           ),
-        )
-      ],
+      
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
+              child: ExerciseTable(tableData: tableData, workoutIndex: widget.workoutIndex, exerciseIndex: widget.exerciseIndex),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
