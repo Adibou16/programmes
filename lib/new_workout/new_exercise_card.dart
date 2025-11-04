@@ -7,17 +7,45 @@ import 'package:programmes/workout/exercise/exercise_card.dart';
 class NewExerciseCard extends StatefulWidget {
   final int weeks;
   final int exerciseIndex;
+  final ExerciseCard initialData;
   final Function(ExerciseCard)? workoutUpdated;
 
-  const NewExerciseCard({super.key, required this.weeks, required this.exerciseIndex, this.workoutUpdated});
+  const NewExerciseCard({
+    super.key, 
+    required this.weeks, 
+    required this.exerciseIndex, 
+    required this.initialData,
+    this.workoutUpdated
+  });
 
   @override
   State<NewExerciseCard> createState() => _NewExerciseCardState();
 }
 
 class _NewExerciseCardState extends State<NewExerciseCard> {
-  String imagePath = '';
-  List<List<int>> tableData = [[0, 0, 0]];
+  late String imagePath;
+  late List<List<int>> tableData;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDataFromWidget();
+  }
+
+  void _loadDataFromWidget() {
+    imagePath = widget.initialData.imagePath;
+    tableData = List.from(widget.initialData.tableData.map((row) => List<int>.from(row)));
+  }
+
+  @override
+  void didUpdateWidget(covariant NewExerciseCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+     if (widget.initialData != oldWidget.initialData) {
+      setState(() {
+        _loadDataFromWidget();
+      });
+    }
+  }
 
   void notifyParent() {
     if (widget.workoutUpdated != null) {
@@ -33,25 +61,6 @@ class _NewExerciseCardState extends State<NewExerciseCard> {
   Widget build(BuildContext context) {
     int weeks = widget.weeks;
 
-    final NewExerciseImage exerciseImage = NewExerciseImage(
-      onImageSelected: (path) {
-        setState(() {
-          imagePath = path;
-        });
-        notifyParent();
-      },
-    );
-
-    final NewExerciseTable exerciseTable = NewExerciseTable(
-      weeks: weeks,
-      onTableChanged: (table) {
-        setState(() {
-          tableData = table;
-        });
-        notifyParent();
-      },
-    );
-
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,
@@ -59,18 +68,33 @@ class _NewExerciseCardState extends State<NewExerciseCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-      
           Padding(
-            padding: EdgeInsets.all(10.0),
-            child: exerciseImage,
+            padding: const EdgeInsets.all(10.0),
+            child: NewExerciseImage(
+              initialImagePath: imagePath,
+              onImageSelected: (path) {
+                setState(() {
+                  imagePath = path;
+                });
+                notifyParent();
+              },
+            ),
           ),
-      
           Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
-              child: exerciseTable,
+              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
+              child: NewExerciseTable(
+                weeks: weeks,
+                initialTableData: tableData,
+                onTableChanged: (table) {
+                  setState(() {
+                    tableData = table;
+                  });
+                  notifyParent();
+                },
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

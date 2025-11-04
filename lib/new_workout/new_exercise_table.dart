@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 
 class NewExerciseTable extends StatefulWidget {
   final int weeks;
+  final List<List<int>> initialTableData;
   final Function(List<List<int>>)? onTableChanged;
 
-  const NewExerciseTable({super.key, required this.weeks, this.onTableChanged});
+  const NewExerciseTable({super.key, required this.weeks, required this.initialTableData, this.onTableChanged});
 
   @override
   State<NewExerciseTable> createState() => _NewExerciseTableState();
@@ -44,7 +45,7 @@ class _NewExerciseTableState extends State<NewExerciseTable> {
     final headers = ["Séries", "Répétitions", "Repos"];
     final width = MediaQuery.of(context).size.width;
     final titleStyle = TextStyle(color: Colors.grey[300], fontSize: width * 0.035);
-    final headingStyle = TextStyle(color: Colors.grey[350], fontWeight: FontWeight.bold, fontSize: width * 0.03);
+    final headingStyle = TextStyle(color: Colors.grey[350], fontWeight: FontWeight.bold, fontSize: width * 0.03, overflow: TextOverflow.ellipsis);
     final dataStyle = TextStyle(color: Colors.grey[400], fontSize: width * 0.03);
 
     return Column(
@@ -96,7 +97,8 @@ class _NewExerciseTableState extends State<NewExerciseTable> {
           Center(
             child: TextField(
               controller: controllers[rowIndex][col],
-              style: TextStyle(color: Colors.blue[600], fontSize: dataStyle.fontSize),
+              style: TextStyle(color: Colors.blue[600], fontSize: dataStyle.fontSize, overflow: TextOverflow.fade),
+              textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(

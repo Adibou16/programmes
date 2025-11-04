@@ -5,8 +5,9 @@ import 'dart:convert';
 
 
 class NewExerciseImage extends StatefulWidget {
+  final String initialImagePath;
   final Function(String)? onImageSelected;
-  const NewExerciseImage({super.key, this.onImageSelected});
+  const NewExerciseImage({super.key, required this.initialImagePath, this.onImageSelected});
 
   @override
   State<NewExerciseImage> createState() => _NewExerciseImageState();
@@ -14,9 +15,9 @@ class NewExerciseImage extends StatefulWidget {
 
 class _NewExerciseImageState extends State<NewExerciseImage> {
   TextEditingController nameController = TextEditingController();
-  String imagePath = 'exercise_images/null.jpg';
+  String imagePath = 'exercise_images/other/null.jpg';
   List<String> imagePaths = [];
-  final String assetDir = 'exercise_images';
+  final String assetDir = 'exercise_images/default';
 
     @override
   void initState() {
@@ -49,7 +50,7 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
             constraints: BoxConstraints(maxWidth: width * 0.35),
             labelText: 'Nom',
             isDense: true,
-            labelStyle: TextStyle(color: Colors.grey[400]),
+            labelStyle: TextStyle(color: Colors.grey[400], fontSize: width * 0.045),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey[700]!),
             ),
@@ -58,14 +59,14 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
             ),
           ),
           onEditingComplete: () {
-            if (imagePath == 'exercise_images/null.jpg') {
+            if (imagePath == 'exercise_images/other/null.jpg') {
               for (var i = 0; i < imagePaths.length; i++) {
                 if (nameController.text.toLowerCase() == imagePaths[i].split('/').last.split('.').first.toLowerCase()) {
                   setState(() {
                     final newPath = nameController.text.split(' ').map((word) =>
                       word.isNotEmpty ? '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}' : '')
                       .join(' ');
-                    imagePath = 'exercise_images/$newPath.jpg';
+                    imagePath = 'exercise_images/default/$newPath.jpg';
                     nameController.text = newPath;
                   });
                 }

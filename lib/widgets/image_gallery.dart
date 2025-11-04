@@ -4,7 +4,7 @@ import 'dart:convert';
 
 class ImageGallery extends StatefulWidget {
   final String assetDir;
-  const ImageGallery({super.key, this.assetDir = 'exercise_images'});
+  const ImageGallery({super.key, this.assetDir = 'exercise_images/default'});
 
   @override
   State<ImageGallery> createState() => _ImageGalleryState();
@@ -59,26 +59,22 @@ class _ImageGalleryState extends State<ImageGallery> {
         ),
         itemCount: imagePaths.length,
         itemBuilder: (context, index) {
-          if (imagePaths[index] != 'exercise_images/null.jpg') {
-            return IconButton(
-              padding: EdgeInsets.zero,
-              iconSize: double.infinity,
-              icon: AspectRatio(
-                aspectRatio: 1,
-                child: ClipRRect(
-                  child: Image.asset(
-                    imagePaths[index],
-                    fit: BoxFit.cover,
-                  ),
+          return IconButton(
+            padding: EdgeInsets.zero,
+            iconSize: double.infinity,
+            icon: AspectRatio(
+              aspectRatio: 1,
+              child: ClipRRect(
+                child: Image.asset(
+                  imagePaths[index],
+                  fit: BoxFit.cover,
                 ),
               ),
-              onPressed: () {
-                Navigator.pop(context, imagePaths[index]);
-              },
-            );
-          } else {
-            return Container();
-          }
+            ),
+            onPressed: () {
+              Navigator.pop(context, imagePaths[index]);
+            },
+          );
         },
       ),
     );
