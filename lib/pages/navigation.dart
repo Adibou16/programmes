@@ -15,7 +15,7 @@ class _NavigationState extends State<Navigation> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     const Home(),
-    const Placeholder(), // Placeholder for middle button, since we push instead
+    const Placeholder(),
     const Profile(),
   ];
 

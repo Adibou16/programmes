@@ -78,12 +78,60 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
         ),
+        actions: <Widget> [
+          CircleAvatar(
+            backgroundColor: Colors.blue,
+            child: IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context, 
+                  builder: (context) => AlertDialog(
+                    backgroundColor: Colors.grey[600],
+                    title: const Text("Sauvegarder"),
+                    content: const Text("Avez-vous terminer de créer le programme d'entrainement?"),
+                    actions: [
+                      MaterialButton(
+                        onPressed: () => Navigator.pop(context), 
+                        child: const Text('Non')
+                      ),
+                      MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            boxWorkouts.put(
+                              'key_$name',
+                              Workout(
+                                title: name,
+                                description: description,
+                                exercises: exercisesData.map((e) => e['data'] as ExerciseCard).toList(),
+                              ),
+                            );
+                          });
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => Navigation()),
+                            ModalRoute.withName('/'),
+                          );
+                        }, 
+                        child: const Text('Oui')
+                      ),
+                    ],
+                  )
+                );
+              },
+              icon: const Icon(Icons.save_alt, color: Colors.black),
+            ),
+          ),
+        ],
       ),
-      body: Expanded(
-        child: ListView(
+
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
           children: [
             ReorderableListView.builder(
-              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: exercisesData.length,
               onReorder: reorderExercises,
               proxyDecorator: (child, index, animation) {
@@ -136,6 +184,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                 );
               },
             ),
+
             const SizedBox(height: 10),
 
             CircleAvatar(
@@ -143,38 +192,6 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
               child: IconButton(
                 onPressed: addNewExerciseCard,
                 icon: const Icon(Icons.add, color: Colors.black),
-              ),
-            ),
-            
-            const SizedBox(height: 10),
-
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  boxWorkouts.put(
-                    'key_$name',
-                    Workout(
-                      title: name,
-                      description: description,
-                      exercises: exercisesData.map((e) => e['data'] as ExerciseCard).toList(),
-                    ),
-                  );
-                });
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => Navigation()),
-                  ModalRoute.withName('/'),
-                );
-              },
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(Colors.blue),
-              ),
-              child: const Text(
-                'Créer nouveau workout',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
               ),
             ),
           ],
