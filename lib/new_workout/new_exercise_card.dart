@@ -65,36 +65,47 @@ class _NewExerciseCardState extends State<NewExerciseCard> {
       elevation: 0,
       clipBehavior: Clip.antiAlias,
       color: Colors.grey[900],
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: NewExerciseImage(
-              initialImagePath: imagePath,
-              onImageSelected: (path) {
-                setState(() {
-                  imagePath = path;
-                });
-                notifyParent();
-              },
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
-              child: NewExerciseTable(
-                weeks: weeks,
-                initialTableData: tableData,
-                onTableChanged: (table) {
-                  setState(() {
-                    tableData = table;
-                  });
-                  notifyParent();
-                },
+          
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: NewExerciseImage(
+                      initialImagePath: imagePath,
+                      onImageSelected: (path) {
+                        setState(() {
+                          imagePath = path;
+                        });
+                        notifyParent();
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
+                      child: NewExerciseTable(
+                        weeks: weeks,
+                        initialTableData: tableData,
+                        onTableChanged: (table) {
+                          setState(() {
+                            tableData = table;
+                          });
+                          notifyParent();
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+              const SizedBox(height: 16)
+            ],
           ),
+        
         ],
       ),
     );

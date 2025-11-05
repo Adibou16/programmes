@@ -41,7 +41,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
       exercisesData.add({
         'id': const Uuid().v4(), 
         'data': blank,
-        'key': GlobalKey(), // Added GlobalKey
+        'key': GlobalKey(),
       });
     });
   }
@@ -49,6 +49,16 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
   void deleteExerciseCard(String id) {
     setState(() {
       exercisesData.removeWhere((item) => item['id'] == id);
+    });
+  }
+
+  void reorderExercises(int oldIndex, int newIndex) {
+    setState(() {
+      if (newIndex > oldIndex) {
+        newIndex -= 1;
+      }
+      final item = exercisesData.removeAt(oldIndex);
+      exercisesData.insert(newIndex, item);
     });
   }
 
@@ -69,18 +79,28 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
+      body: Expanded(
+        child: ListView(
+          children: [
+            ReorderableListView.builder(
               physics: const BouncingScrollPhysics(),
               itemCount: exercisesData.length,
+              onReorder: reorderExercises,
+              proxyDecorator: (child, index, animation) {
+                return Material(
+                  elevation: 8,
+                  color: Colors.transparent,
+                  child: child,
+                );
+              },
               itemBuilder: (context, index) {
                 final exercise = exercisesData[index];
                 return Stack(
+                  key: ValueKey(exercise['id']),
+                  alignment: Alignment.center,
                   children: [
                     NewExerciseCard(
-                      key: exercise['key'], // Using GlobalKey instead of ValueKey
+                      key: exercise['key'],
                       weeks: widget.weeks,
                       exerciseIndex: index,
                       initialData: exercise['data'],
@@ -98,49 +118,67 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                         onPressed: () => deleteExerciseCard(exercise['id']),
                       ),
                     ),
+                    Positioned(
+                      bottom: -4,
+                      child: ReorderableDragStartListener(
+                        index: index,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Icon(
+                            Icons.drag_handle,
+                            color: Colors.grey[600],
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 );
               },
             ),
-          ),
-          const SizedBox(height: 10),
-          CircleAvatar(
-            backgroundColor: Colors.blue,
-            child: IconButton(
-              onPressed: addNewExerciseCard,
-              icon: const Icon(Icons.add, color: Colors.black),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                boxWorkouts.put(
-                  'key_$name',
-                  Workout(
-                    title: name,
-                    description: description,
-                    exercises: exercisesData.map((e) => e['data'] as ExerciseCard).toList(),
-                  ),
-                );
-              });
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => Navigation()),
-                ModalRoute.withName('/'),
-              );
-            },
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.blue),
-            ),
-            child: const Text(
-              'Créer nouveau workout',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
+            const SizedBox(height: 10),
+
+            CircleAvatar(
+              backgroundColor: Colors.blue,
+              child: IconButton(
+                onPressed: addNewExerciseCard,
+                icon: const Icon(Icons.add, color: Colors.black),
               ),
             ),
-          ),
-        ],
+            
+            const SizedBox(height: 10),
+
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  boxWorkouts.put(
+                    'key_$name',
+                    Workout(
+                      title: name,
+                      description: description,
+                      exercises: exercisesData.map((e) => e['data'] as ExerciseCard).toList(),
+                    ),
+                  );
+                });
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => Navigation()),
+                  ModalRoute.withName('/'),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(Colors.blue),
+              ),
+              child: const Text(
+                'Créer nouveau workout',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
