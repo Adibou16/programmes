@@ -64,13 +64,13 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
 
   @override
   Widget build(BuildContext context) {
-    final name = widget.name;
+    final name = widget.name.isEmpty ? 'Sans nom' : widget.name;
     final description = widget.description;
 
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Nouveau workout'),
+        title: Text(name),
         backgroundColor: Colors.grey[850],
         centerTitle: true,
         titleTextStyle: const TextStyle(
@@ -86,13 +86,13 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                 showDialog(
                   context: context, 
                   builder: (context) => AlertDialog(
-                    backgroundColor: Colors.grey[600],
-                    title: const Text("Sauvegarder"),
-                    content: const Text("Avez-vous terminer de créer le programme d'entrainement?"),
+                    backgroundColor: Colors.grey[900],
+                    title: const Text("Sauvegarder programme d'entrainement", style: TextStyle(color: Colors.white70)),
+                    content: Text('Voulez-vous enregistrer "$name"?', style: const TextStyle(color: Colors.white70)),
                     actions: [
                       MaterialButton(
                         onPressed: () => Navigator.pop(context), 
-                        child: const Text('Non')
+                        child: const Text('Non', style: TextStyle(color: Colors.white70))
                       ),
                       MaterialButton(
                         onPressed: () {
@@ -105,6 +105,9 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                                 exercises: exercisesData.map((e) => e['data'] as ExerciseCard).toList(),
                               ),
                             );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Sauvegarder "$name"')),
+                            );
                           });
                           Navigator.pushAndRemoveUntil(
                             context,
@@ -112,7 +115,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                             ModalRoute.withName('/'),
                           );
                         }, 
-                        child: const Text('Oui')
+                        child: const Text('Sauvegarder', style: TextStyle(color: Colors.blue))
                       ),
                     ],
                   )

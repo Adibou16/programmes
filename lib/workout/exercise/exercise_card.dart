@@ -44,10 +44,12 @@ class _ExerciseCardState extends State<ExerciseCard> {
       
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
               child: ExerciseTable(tableData: tableData, workoutIndex: widget.workoutIndex, exerciseIndex: widget.exerciseIndex),
             ),
-          )
+          ),
+          
+          const SizedBox(width: 10)
         ],
       ),
     );

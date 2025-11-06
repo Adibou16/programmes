@@ -34,7 +34,7 @@ class _ExerciseTableState extends State<ExerciseTable> {
     
           LayoutBuilder(builder: (context, constraints) {
             final totalWidth = constraints.maxWidth.isFinite ? constraints.maxWidth : MediaQuery.of(context).size.width;
-            const minColWidth = 60.0;
+            const minColWidth = 40.0;
             final colWidth = (totalWidth / headers.length).clamp(minColWidth, totalWidth);
             final columnWidths = <int, TableColumnWidth>{ for (var i = 0; i < headers.length; i++) i: FixedColumnWidth(colWidth) };
           
@@ -47,7 +47,7 @@ class _ExerciseTableState extends State<ExerciseTable> {
                 TableRow(
                   decoration: const BoxDecoration(),
                   children: headers.map((h) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6.0),
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
                     child: Center(
                       child: Text(
                         h,
@@ -96,23 +96,24 @@ class _ExerciseTableState extends State<ExerciseTable> {
         // Last column with TextField
         TextField(
           controller: rowController,
+          textAlign: TextAlign.center,
           style: TextStyle(color: Colors.blue[600], fontSize: dataStyle.fontSize),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
           decoration: InputDecoration(
             isDense: true,
-            contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6.0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
             hintText: "poids (lbs)",
             hintStyle: dataStyle,
             border: InputBorder.none,
           ),
-
+        
           onChanged: (value) {
             try {
               final int newVal = int.tryParse(value) ?? 0;
-
+        
               if (widget.workoutIndex == null || widget.exerciseIndex == null) return;
-
+        
               final workout = boxWorkouts.getAt(widget.workoutIndex!);
               final ex = workout.exercises[widget.exerciseIndex];
               ex.tableData[rowIndex][3] = newVal;

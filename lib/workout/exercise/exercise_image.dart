@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class ExerciseImage extends StatefulWidget {
   final String imagePath;
   const ExerciseImage({super.key, required this.imagePath});
@@ -19,9 +17,16 @@ class _ExerciseImageState extends State<ExerciseImage> {
 
     return Column(
       children: [
-        Text(
-          imageName,
-          style: TextStyle(color: Colors.grey[300]),
+        ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: width * 0.25),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              imageName,
+              maxLines: 2,
+              style: TextStyle(color: Colors.grey[300]),
+            ),
+          ),
         ),
         Container(
           decoration: BoxDecoration(

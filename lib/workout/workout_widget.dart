@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:programmes/database/boxes.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
 
 class WorkoutWidget extends StatefulWidget {
@@ -35,30 +34,19 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
 
       backgroundColor: Colors.black,
 
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: exercises.length,
-              physics: const PageScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ExerciseCard(
-                  imagePath: exercises[index].imagePath,
-                  tableData: exercises[index].tableData,
-                  workoutIndex: workoutIndex,
-                  exerciseIndex: index,
-                );
-              },
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
-            onPressed: () {
-              Navigator.pop(context);
-              boxWorkouts.deleteAt(workoutIndex);
-            },
-          ),
-        ],
+      body: Expanded(
+        child: ListView.builder(
+          itemCount: exercises.length,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return ExerciseCard(
+              imagePath: exercises[index].imagePath,
+              tableData: exercises[index].tableData,
+              workoutIndex: workoutIndex,
+              exerciseIndex: index,
+            );
+          },
+        ),
       ),
     );
   }
