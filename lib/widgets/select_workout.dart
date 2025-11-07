@@ -18,17 +18,17 @@ class _SelectWorkoutState extends State<SelectWorkout> {
       itemCount: boxWorkouts.length,
       itemBuilder: (context, index) {
 
-      // Defensive: skip if index is out of range (can happen after deletion)
         if (index >= boxWorkouts.length) {
           return const SizedBox.shrink();
         }
 
         Workout workout = boxWorkouts.getAt(index);
         String title = workout.title;
+        String workoutKey = 'key_$title'; // Get the actual key
 
-        return  Dismissible(
-          key: ValueKey('workout_$index'),
-          direction: DismissDirection.endToStart, // swipe left to delete
+        return Dismissible(
+          key: ValueKey(workoutKey), // Use the workout key instead of index
+          direction: DismissDirection.endToStart,
           background: Container(
             color: Colors.red[700],
             alignment: Alignment.centerRight,
@@ -36,7 +36,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
             child: const Icon(Icons.delete, color: Colors.white),
           ),
 
-                    confirmDismiss: (direction) async {
+          confirmDismiss: (direction) async {
             final bool? confirm = await showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -66,40 +66,36 @@ class _SelectWorkoutState extends State<SelectWorkout> {
           },
 
           onDismissed: (direction) {
-            setState(() => boxWorkouts.deleteAt(index)); // Refresh list
+            setState(() {
+              boxWorkouts.delete(workoutKey); // Delete by key instead of index
+            });
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Supprimer "$title"')),
             );
           },
 
-          child: Card (
+          child: Card(
             color: Colors.grey[900],
             margin: const EdgeInsets.all(10.0),
             child: ListTile(
               title: Text(title, style: const TextStyle(color: Colors.white)),
-              subtitle: Text(workout.description, style: TextStyle(color: Colors.white)),
+              subtitle: Text(workout.description, style: const TextStyle(color: Colors.white)),
               trailing: const Icon(Icons.arrow_forward, color: Colors.white),
               onTap: () async {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => const Center(child: CircularProgressIndicator()),
-                );
                 await Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => WorkoutWidget(exercises: workout.exercises, workoutIndex: index, name: title)),
+                  MaterialPageRoute(
+                    builder: (context) => WorkoutWidget(
+                      exercises: workout.exercises,
+                      workoutKey: workoutKey, // Pass key instead of index
+                      name: title,
+                    ),
+                  ),
                 );
                 
-                // Show loading again after pop
+                // Refresh the list when coming back
                 if (mounted) {
-                  Navigator.of(context).pop(); // Remove previous loading dialog
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => const Center(child: CircularProgressIndicator()),
-                  );
-                  if (mounted) Navigator.of(context).pop(); // Remove loading dialog
-                  setState(() {}); // Refresh when coming back
+                  setState(() {});
                 }
               },
             ),
@@ -109,5 +105,3 @@ class _SelectWorkoutState extends State<SelectWorkout> {
     );
   }
 }
-
-

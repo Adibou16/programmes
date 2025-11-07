@@ -8,10 +8,10 @@ import 'package:programmes/database/exercise_data.dart';
 
 class WorkoutWidget extends StatefulWidget {
   final List<ExerciseData> exercises;
-  final int workoutIndex;
+  final String workoutKey; 
   final String name;
 
-  const WorkoutWidget({super.key, required this.exercises, required this.workoutIndex, required this.name});
+  const WorkoutWidget({super.key, required this.exercises, required this.workoutKey, required this.name});
 
   @override
   State<WorkoutWidget> createState() => _WorkoutWidgetState();
@@ -22,9 +22,19 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
 
   Widget build(BuildContext context) {
     final exercises = widget.exercises;
-    final workoutIndex = widget.workoutIndex;
+    final workoutKey = widget.workoutKey;
     final name = widget.name;
-    final Workout workout = boxWorkouts.getAt(workoutIndex);
+    final Workout? workout = boxWorkouts.get(workoutKey);
+    
+    if (workout == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pop(context);
+      });
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    
     final String description = workout.description;
     
     return Scaffold(
@@ -89,8 +99,6 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
           return ExerciseCard(
             imagePath: exercises[index].imagePath,
             tableData: exercises[index].tableData,
-            workoutIndex: workoutIndex,
-            exerciseIndex: index,
           );
         },
       ),
