@@ -15,13 +15,19 @@ class NewExerciseImage extends StatefulWidget {
 
 class _NewExerciseImageState extends State<NewExerciseImage> {
   TextEditingController nameController = TextEditingController();
-  String imagePath = 'exercise_images/other/null.jpg';
+  late String imagePath;
   List<String> imagePaths = [];
   final String assetDir = 'exercise_images/default';
 
     @override
   void initState() {
     super.initState();
+
+    imagePath = widget.initialImagePath;
+    if (imagePath != 'exercise_images/other/null.jpg') {
+      nameController.text = imagePath.split('/').last.split('.').first;
+    }
+
     _loadAssets();
   }
 

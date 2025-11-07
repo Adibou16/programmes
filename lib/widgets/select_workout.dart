@@ -66,8 +66,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
           },
 
           onDismissed: (direction) {
-            boxWorkouts.deleteAt(index);
-            setState(() {}); // Refresh list
+            setState(() => boxWorkouts.deleteAt(index)); // Refresh list
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Supprimer "$title"')),
             );

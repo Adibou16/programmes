@@ -19,7 +19,7 @@ class WorkoutAdapter extends TypeAdapter<Workout> {
     return Workout(
       title: fields[0] as String,
       description: fields[1] as String,
-      exercises: (fields[2] as List).cast<ExerciseCard>(),
+      exercises: (fields[2] as List).cast<ExerciseData>(),
     );
   }
 

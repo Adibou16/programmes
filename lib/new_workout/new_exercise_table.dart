@@ -20,7 +20,13 @@ class _NewExerciseTableState extends State<NewExerciseTable> {
   @override
   void initState() {
     super.initState();
-    tableData = List.generate(widget.weeks, (_) => [0, 0, 0, 0]);
+    
+    if (widget.initialTableData.isNotEmpty && widget.initialTableData.length == widget.weeks) {
+      tableData = List.from(widget.initialTableData.map((row) => List<int>.from(row)));
+    } else {
+      tableData = List.generate(widget.weeks, (_) => [0, 0, 0, 0]);
+    }
+    
     controllers = List.generate(
       widget.weeks,
       (i) => List.generate(

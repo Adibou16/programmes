@@ -4,18 +4,21 @@ import 'package:programmes/database/workout.dart';
 import 'package:programmes/new_workout/new_exercise_card.dart';
 import 'package:programmes/pages/navigation.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
+import 'package:programmes/database/exercise_data.dart';
 import 'package:uuid/uuid.dart';
 
 class NewWorkoutSecond extends StatefulWidget {
   final String name;
   final String description;
   final int weeks;
+  final List<ExerciseData>? exercises;
 
   const NewWorkoutSecond({
     super.key,
     required this.name,
     required this.description,
     required this.weeks,
+    this.exercises,
   });
 
   @override
@@ -26,14 +29,23 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
   late List<Map<String, dynamic>> exercisesData = [];
 
   final ExerciseCard blank = const ExerciseCard(
-    imagePath: 'exercise_images/null.jpg',
+    imagePath: 'exercise_images/other/null.jpg',
     tableData: [[0, 0, 0, 0]],
   );
 
   @override
   void initState() {
     super.initState();
-    addNewExerciseCard();
+
+    if (widget.exercises != null && widget.exercises!.isNotEmpty) {
+      for (final exerciseData in widget.exercises!) {
+        print(exerciseData.imagePath);
+        print(exerciseData.tableData);
+        addExerciseCardWithData(exerciseData.imagePath, exerciseData.tableData);
+      }
+    } else {
+      addNewExerciseCard();
+    }
   }
 
   void addNewExerciseCard() {
@@ -41,6 +53,19 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
       exercisesData.add({
         'id': const Uuid().v4(), 
         'data': blank,
+        'key': GlobalKey(),
+      });
+    });
+  }
+
+   void addExerciseCardWithData(String imagePath, List<List<int>> tableData) {
+    setState(() {
+      exercisesData.add({
+        'id': const Uuid().v4(), 
+        'data': ExerciseCard(
+          imagePath: imagePath,
+          tableData: tableData,
+        ),
         'key': GlobalKey(),
       });
     });
@@ -82,6 +107,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
           CircleAvatar(
             backgroundColor: Colors.blue,
             child: IconButton(
+              icon: const Icon(Icons.save_alt, color: Colors.black),
               onPressed: () {
                 showDialog(
                   context: context, 
@@ -102,7 +128,15 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                               Workout(
                                 title: name,
                                 description: description,
-                                exercises: exercisesData.map((e) => e['data'] as ExerciseCard).toList(),
+                                exercises: exercisesData
+                                  .map((e) {
+                                    final ExerciseCard card = e['data'] as ExerciseCard;
+                                    return ExerciseData(
+                                      imagePath: card.imagePath,
+                                      tableData: card.tableData,
+                                    );
+                                  })
+                                  .toList(),
                               ),
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -121,7 +155,6 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                   )
                 );
               },
-              icon: const Icon(Icons.save_alt, color: Colors.black),
             ),
           ),
         ],
@@ -146,6 +179,8 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
               },
               itemBuilder: (context, index) {
                 final exercise = exercisesData[index];
+                final ExerciseCard cardData = exercise['data'] as ExerciseCard;
+
                 return Stack(
                   key: ValueKey(exercise['id']),
                   alignment: Alignment.center,
@@ -154,7 +189,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                       key: exercise['key'],
                       weeks: widget.weeks,
                       exerciseIndex: index,
-                      initialData: exercise['data'],
+                      initialData: cardData,
                       workoutUpdated: (updatedExercise) {
                         setState(() {
                           exercisesData[index]['data'] = updatedExercise;
@@ -193,7 +228,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
             CircleAvatar(
               backgroundColor: Colors.blue,
               child: IconButton(
-                onPressed: addNewExerciseCard,
+                onPressed: () => addNewExerciseCard(),
                 icon: const Icon(Icons.add, color: Colors.black),
               ),
             ),
