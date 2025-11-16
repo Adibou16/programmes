@@ -21,7 +21,7 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
   @override
 
   Widget build(BuildContext context) {
-    final exercises = widget.exercises;
+    var exercises = widget.exercises;
     final workoutKey = widget.workoutKey;
     final name = widget.name;
     final Workout? workout = boxWorkouts.get(workoutKey);
@@ -66,6 +66,12 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
                       ),
                       MaterialButton(
                         onPressed: () {
+                          if (exercises.isEmpty) {
+                            exercises =  [ExerciseData(
+                              imagePath: 'exercise_images/other;/null.jpg',
+                              tableData: [[0, 0, 0, 0]]
+                            )];
+                          }
                           Navigator.pop(context);
                           Navigator.push(
                             context, 
@@ -73,7 +79,7 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
                               builder: (context) => NewWorkoutSecond(
                                 name: name, 
                                 description: description, 
-                                weeks: workout.exercises[0].tableData[0].isEmpty ? 1 : workout.exercises[0].tableData[0].length, 
+                                weeks: exercises[0].tableData.length, 
                                 exercises: exercises,
                               )
                             ),
