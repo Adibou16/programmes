@@ -36,11 +36,8 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
   @override
   void initState() {
     super.initState();
-
     if (widget.exercises != null && widget.exercises!.isNotEmpty) {
       for (final exerciseData in widget.exercises!) {
-        print(exerciseData.imagePath);
-        print(exerciseData.tableData);
         addExerciseCardWithData(exerciseData.imagePath, exerciseData.tableData);
       }
     } else {

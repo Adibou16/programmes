@@ -73,7 +73,7 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
                               builder: (context) => NewWorkoutSecond(
                                 name: name, 
                                 description: description, 
-                                weeks: exercises[0].tableData[0].length, 
+                                weeks: workout.exercises[0].tableData[0].isEmpty ? 1 : workout.exercises[0].tableData[0].length, 
                                 exercises: exercises,
                               )
                             ),
