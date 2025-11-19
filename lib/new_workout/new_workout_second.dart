@@ -198,7 +198,27 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                       top: -6,
                       child: IconButton(
                         icon: const Icon(Icons.remove_circle, color: Colors.redAccent),
-                        onPressed: () => deleteExerciseCard(exercise['id']),
+                        onPressed: () {
+                          if (exercisesData.length <= 1) {
+                            showDialog(
+                              context: context, 
+                              builder: (context) => AlertDialog(
+                                backgroundColor: Colors.grey[900],
+                                title: const Text("Erreur", style: TextStyle(color: Colors.redAccent)),
+                                content: const Text("Un programme d'entrainement doit contenir au moins 1 exercice.", style: TextStyle(color: Colors.white70)),
+                                actions: [
+                                  MaterialButton(
+                                    onPressed: () => Navigator.pop(context), 
+                                    child: const Text('Continuer', style: TextStyle(color: Colors.white70))
+                                  ),
+                                 
+                                ],
+                              )
+                            );
+                          } else {
+                            deleteExerciseCard(exercise['id']);
+                          }
+                        }
                       ),
                     ),
                     Positioned(
