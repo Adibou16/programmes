@@ -1,4 +1,4 @@
-import 'package:programmes/workout/exercise/exercise_card.dart';
+import 'package:programmes/database/exercise_data.dart';
 import 'package:hive/hive.dart';
 
 part 'workout.g.dart';
@@ -12,7 +12,7 @@ class Workout {
   String description;
 
   @HiveField(2)
-  List<ExerciseCard> exercises;
+  List<ExerciseData> exercises;
 
   Workout({
     required this.title, 

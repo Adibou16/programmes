@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'exercise_card.dart';
+part of 'exercise_data.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ExerciseCardAdapter extends TypeAdapter<ExerciseCard> {
+class ExerciseDataAdapter extends TypeAdapter<ExerciseData> {
   @override
   final int typeId = 1;
 
   @override
-  ExerciseCard read(BinaryReader reader) {
+  ExerciseData read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ExerciseCard(
-      imageName: fields[0] as String,
+    return ExerciseData(
+      imagePath: fields[0] as String,
       tableData: (fields[1] as List)
           .map((dynamic e) => (e as List).cast<int>())
           .toList(),
@@ -25,11 +25,11 @@ class ExerciseCardAdapter extends TypeAdapter<ExerciseCard> {
   }
 
   @override
-  void write(BinaryWriter writer, ExerciseCard obj) {
+  void write(BinaryWriter writer, ExerciseData obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.imageName)
+      ..write(obj.imagePath)
       ..writeByte(1)
       ..write(obj.tableData);
   }
@@ -40,7 +40,7 @@ class ExerciseCardAdapter extends TypeAdapter<ExerciseCard> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ExerciseCardAdapter &&
+      other is ExerciseDataAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

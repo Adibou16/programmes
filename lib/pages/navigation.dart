@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:programmes/new_workout/new_workout_first.dart';
 import 'package:programmes/pages/home.dart';
-import 'package:programmes/pages/new_workout.dart';
 import 'package:programmes/pages/profile.dart';
 
 class Navigation extends StatefulWidget {
@@ -12,23 +12,31 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
+
   static final List<Widget> _widgetOptions = <Widget>[
     const Home(),
-    const NewWorkout(),
+    const Placeholder(),
     const Profile(),
   ];
 
-   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onItemTapped(int index) async {
+    if (index == 1) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const NewWorkoutFirst()),
+      );
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
-  
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: _widgetOptions.elementAt(_selectedIndex),
-
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.grey[850],
         unselectedItemColor: Colors.white,
@@ -36,7 +44,6 @@ class _NavigationState extends State<Navigation> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Acceuil",
-            
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
@@ -45,12 +52,11 @@ class _NavigationState extends State<Navigation> {
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: "Profil",
-          ),  
+          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
-
       ),
     );
   }
