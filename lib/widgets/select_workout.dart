@@ -87,7 +87,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                   MaterialPageRoute(
                     builder: (context) => WorkoutWidget(
                       exercises: workout.exercises,
-                      workoutKey: workoutKey, // Pass key instead of index
+                      workoutKey: workoutKey, 
                       name: title,
                     ),
                   ),

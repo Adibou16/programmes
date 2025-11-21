@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:programmes/widgets/image_gallery.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+import 'dart:io';
 
 
 class NewExerciseImage extends StatefulWidget {
+  final String initalExerciseName;
   final String initialImagePath;
+  final Function(String)? onNameChanged;
   final Function(String)? onImageSelected;
-  const NewExerciseImage({super.key, required this.initialImagePath, this.onImageSelected});
+  const NewExerciseImage({super.key, required this.initalExerciseName,required this.initialImagePath, this.onNameChanged, this.onImageSelected});
 
   @override
   State<NewExerciseImage> createState() => _NewExerciseImageState();
@@ -15,18 +18,24 @@ class NewExerciseImage extends StatefulWidget {
 
 class _NewExerciseImageState extends State<NewExerciseImage> {
   TextEditingController nameController = TextEditingController();
+  late String exerciseName;
   late String imagePath;
   List<String> imagePaths = [];
   final String assetDir = 'exercise_images/default';
 
-    @override
+  ImageProvider getImageProvider(String path) {
+    if (path.startsWith('exercise_images') | path.startsWith('other')) {
+      return AssetImage(path);
+    }
+    return FileImage(File(path));
+  }
+
+  @override
   void initState() {
     super.initState();
-
+    exerciseName = widget.initalExerciseName;
+    nameController.text = exerciseName;
     imagePath = widget.initialImagePath;
-    if (imagePath != 'exercise_images/other/null.jpg') {
-      nameController.text = imagePath.split('/').last.split('.').first;
-    }
 
     _loadAssets();
   }
@@ -42,8 +51,8 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
     setState(() => imagePaths = paths);
   }
 
+
   @override
-@override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
@@ -64,7 +73,15 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
               borderSide: BorderSide(color: Colors.blue),
             ),
           ),
+
           onEditingComplete: () {
+            if (nameController.text.isNotEmpty) {
+                setState(() {
+                  exerciseName = nameController.text;
+                  widget.onNameChanged?.call(exerciseName);
+              });
+            }
+
             if (imagePath == 'exercise_images/other/null.jpg') {
               for (var i = 0; i < imagePaths.length; i++) {
                 if (nameController.text.toLowerCase() == imagePaths[i].split('/').last.split('.').first.toLowerCase()) {
@@ -74,9 +91,10 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
                       .join(' ');
                     imagePath = 'exercise_images/default/$newPath.jpg';
                     nameController.text = newPath;
+                    widget.onImageSelected?.call(newPath);
                   });
                 }
-              };
+              }
             }
           },
         ),
@@ -85,15 +103,15 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
 
         InkWell(
           onTap: () async {
-            final newPath = await Navigator.push(
-            context, 
-            MaterialPageRoute(builder: (context) => const ImageGallery()));
+            final newPath = await Navigator.push(context, MaterialPageRoute(builder: (context) => const ImageGallery()));
 
             if (newPath != null && mounted) {
                 setState(() {
                   imagePath = newPath;
                   if (nameController.text.trim().isEmpty) {
                     nameController.text = imagePath.split('/').last.split('.').first;
+                    exerciseName = nameController.text;
+                    widget.onNameChanged?.call(exerciseName);
                   }
                   widget.onImageSelected?.call(newPath);
                 });
@@ -103,7 +121,7 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
           child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(imagePath),
+              image: getImageProvider(imagePath),
               fit: BoxFit.cover,
             ),
           ),

@@ -64,10 +64,12 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
                         onPressed: () => Navigator.pop(context), 
                         child: const Text('Non', style: TextStyle(color: Colors.white70))
                       ),
+
                       MaterialButton(
                         onPressed: () {
                           if (exercises.isEmpty) {
                             exercises =  [ExerciseData(
+                              exerciseName: 'no name',
                               imagePath: 'exercise_images/other;/null.jpg',
                               tableData: [[0, 0, 0, 0]]
                             )];
@@ -103,6 +105,7 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           return ExerciseCard(
+            exerciseName: exercises[index].exerciseName ?? exercises[index].imagePath.split('/').last.split('.').first,
             imagePath: exercises[index].imagePath,
             tableData: exercises[index].tableData,
           );

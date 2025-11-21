@@ -4,14 +4,21 @@ import 'package:programmes/workout/exercise/exercise_table.dart';
 
 
 class ExerciseCard extends StatefulWidget {
+  final String exerciseName;
   final String imagePath;
-
   final List<List<int>> tableData;
 
   final int? workoutIndex;
   final int? exerciseIndex;
 
-  const ExerciseCard({super.key, required this.imagePath, required this.tableData, this.workoutIndex, this.exerciseIndex});
+  const ExerciseCard({
+    super.key, 
+    required this.exerciseName, 
+    required this.imagePath, 
+    required this.tableData, 
+    this.workoutIndex, 
+    this.exerciseIndex
+  });
 
   @override
   State<ExerciseCard> createState() => _ExerciseCardState();
@@ -21,6 +28,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
   @override
 
   Widget build(BuildContext context) {
+    final String exerciseName = widget.exerciseName;
     final String imagePath = widget.imagePath;
     final List<List<int>> tableData = widget.tableData;
 
@@ -34,7 +42,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
       
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: ExerciseImage(imagePath: imagePath),
+            child: ExerciseImage(exerciseName: exerciseName, imagePath: imagePath),
           ),
       
           Expanded(

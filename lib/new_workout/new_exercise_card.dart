@@ -23,6 +23,7 @@ class NewExerciseCard extends StatefulWidget {
 }
 
 class _NewExerciseCardState extends State<NewExerciseCard> {
+  late String exerciseName;
   late String imagePath;
   late List<List<int>> tableData;
 
@@ -33,6 +34,7 @@ class _NewExerciseCardState extends State<NewExerciseCard> {
   }
 
   void _loadDataFromWidget() {
+    exerciseName = widget.initialData.exerciseName;
     imagePath = widget.initialData.imagePath;
     tableData = List.from(widget.initialData.tableData.map((row) => List<int>.from(row)));
   }
@@ -50,6 +52,7 @@ class _NewExerciseCardState extends State<NewExerciseCard> {
   void notifyParent() {
     if (widget.workoutUpdated != null) {
       final exercise = ExerciseCard(
+        exerciseName: exerciseName,
         imagePath: imagePath,
         tableData: tableData,
       );
@@ -76,6 +79,7 @@ class _NewExerciseCardState extends State<NewExerciseCard> {
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: NewExerciseImage(
+                      initalExerciseName: exerciseName,
                       initialImagePath: imagePath,
                       onImageSelected: (path) {
                         setState(() {
@@ -83,6 +87,12 @@ class _NewExerciseCardState extends State<NewExerciseCard> {
                         });
                         notifyParent();
                       },
+                      onNameChanged: (name) {
+                        setState(() {
+                          exerciseName = name;
+                        });
+                        notifyParent();
+                      }
                     ),
                   ),
                   Expanded(
