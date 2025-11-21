@@ -144,7 +144,9 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                               ),
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Sauvegarder "$name"')),
+                              SnackBar(
+                                backgroundColor: Colors.grey[900],
+                                content: Text('Sauvegarder "$name"', style: const TextStyle(color: Colors.white))),
                             );
                           });
                           Navigator.pushAndRemoveUntil(
