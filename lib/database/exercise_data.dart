@@ -4,6 +4,9 @@ part 'exercise_data.g.dart';
 
 @HiveType(typeId: 1)
 class ExerciseData {
+  @HiveField(2)
+  final String? exerciseName;
+
   @HiveField(0)
   final String imagePath;
 
@@ -11,6 +14,7 @@ class ExerciseData {
   final List<List<int>> tableData;
 
   ExerciseData({
+    required this.exerciseName,
     required this.imagePath,
     required this.tableData,
   });

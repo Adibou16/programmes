@@ -70,7 +70,9 @@ class _SelectWorkoutState extends State<SelectWorkout> {
               boxWorkouts.delete(workoutKey); // Delete by key instead of index
             });
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Supprimer "$title"')),
+              SnackBar(
+                backgroundColor: Colors.grey[900],
+                content: Text('Supprimer "$title"', style: const TextStyle(color: Colors.white))),
             );
           },
 
@@ -87,7 +89,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                   MaterialPageRoute(
                     builder: (context) => WorkoutWidget(
                       exercises: workout.exercises,
-                      workoutKey: workoutKey, // Pass key instead of index
+                      workoutKey: workoutKey, 
                       name: title,
                     ),
                   ),

@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+
 
 class ExerciseImage extends StatefulWidget {
+  final String exerciseName;
   final String imagePath;
-  const ExerciseImage({super.key, required this.imagePath});
+  const ExerciseImage({super.key, required this.exerciseName, required this.imagePath});
 
   @override
   State<ExerciseImage> createState() => _ExerciseImageState();
 }
 
 class _ExerciseImageState extends State<ExerciseImage> {
+  ImageProvider getImageProvider(String path) {
+    if (path.startsWith('exercise_images') | path.startsWith('exercise_images')) {
+      return AssetImage(path);
+    }
+    return FileImage(File(path));
+  }
+
   @override
   Widget build(BuildContext context) {
+    String imageName = widget.exerciseName;
     String imagePath = widget.imagePath;
-    String imageName = imagePath.split('/').last.split('.').first;
     double width = MediaQuery.of(context).size.width;
 
     return Column(
@@ -31,7 +41,7 @@ class _ExerciseImageState extends State<ExerciseImage> {
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(imagePath),
+              image: getImageProvider(imagePath),
               fit: BoxFit.cover,
               ),
           ),

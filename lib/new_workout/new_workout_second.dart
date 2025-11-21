@@ -29,6 +29,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
   late List<Map<String, dynamic>> exercisesData = [];
 
   final ExerciseCard blank = const ExerciseCard(
+    exerciseName: '',
     imagePath: 'exercise_images/other/null.jpg',
     tableData: [[0, 0, 0, 0]],
   );
@@ -38,7 +39,11 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
     super.initState();
     if (widget.exercises != null && widget.exercises!.isNotEmpty) {
       for (final exerciseData in widget.exercises!) {
-        addExerciseCardWithData(exerciseData.imagePath, exerciseData.tableData);
+        addExerciseCardWithData(
+          exerciseData.exerciseName ?? exerciseData.imagePath.split('/').last.split('.').first, 
+          exerciseData.imagePath, 
+          exerciseData.tableData
+        );
       }
     } else {
       addNewExerciseCard();
@@ -55,11 +60,12 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
     });
   }
 
-   void addExerciseCardWithData(String imagePath, List<List<int>> tableData) {
+   void addExerciseCardWithData(String exerciseName, String imagePath, List<List<int>> tableData) {
     setState(() {
       exercisesData.add({
         'id': const Uuid().v4(), 
         'data': ExerciseCard(
+          exerciseName: exerciseName,
           imagePath: imagePath,
           tableData: tableData,
         ),
@@ -129,6 +135,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                                   .map((e) {
                                     final ExerciseCard card = e['data'] as ExerciseCard;
                                     return ExerciseData(
+                                      exerciseName: card.exerciseName,
                                       imagePath: card.imagePath,
                                       tableData: card.tableData,
                                     );
@@ -137,7 +144,9 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                               ),
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Sauvegarder "$name"')),
+                              SnackBar(
+                                backgroundColor: Colors.grey[900],
+                                content: Text('Sauvegarder "$name"', style: const TextStyle(color: Colors.white))),
                             );
                           });
                           Navigator.pushAndRemoveUntil(
