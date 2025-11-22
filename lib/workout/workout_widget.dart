@@ -108,6 +108,8 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
             exerciseName: exercises[index].exerciseName ?? exercises[index].imagePath.split('/').last.split('.').first,
             imagePath: exercises[index].imagePath,
             tableData: exercises[index].tableData,
+            workoutName: name,
+            exerciseIndex: index,
           );
         },
       ),

@@ -4,13 +4,13 @@ part 'exercise_data.g.dart';
 
 @HiveType(typeId: 1)
 class ExerciseData {
-  @HiveField(2)
+  @HiveField(0)
   final String? exerciseName;
 
-  @HiveField(0)
+  @HiveField(1)
   final String imagePath;
 
-  @HiveField(1)
+  @HiveField(2)
   final List<List<int>> tableData;
 
   ExerciseData({

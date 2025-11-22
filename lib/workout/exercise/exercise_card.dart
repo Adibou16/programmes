@@ -8,7 +8,7 @@ class ExerciseCard extends StatefulWidget {
   final String imagePath;
   final List<List<int>> tableData;
 
-  final int? workoutIndex;
+  final String? workoutName;
   final int? exerciseIndex;
 
   const ExerciseCard({
@@ -16,7 +16,7 @@ class ExerciseCard extends StatefulWidget {
     required this.exerciseName, 
     required this.imagePath, 
     required this.tableData, 
-    this.workoutIndex, 
+    this.workoutName, 
     this.exerciseIndex
   });
 
@@ -48,7 +48,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-              child: ExerciseTable(tableData: tableData, workoutIndex: widget.workoutIndex, exerciseIndex: widget.exerciseIndex),
+              child: ExerciseTable(tableData: tableData, workoutName: widget.workoutName, exerciseIndex: widget.exerciseIndex),
             ),
           ),
           

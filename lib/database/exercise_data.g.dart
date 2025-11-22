@@ -17,9 +17,9 @@ class ExerciseDataAdapter extends TypeAdapter<ExerciseData> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ExerciseData(
-      exerciseName: fields[2] as String?,
-      imagePath: fields[0] as String,
-      tableData: (fields[1] as List)
+      exerciseName: fields[0] as String?,
+      imagePath: fields[1] as String,
+      tableData: (fields[2] as List)
           .map((dynamic e) => (e as List).cast<int>())
           .toList(),
     );
@@ -29,11 +29,11 @@ class ExerciseDataAdapter extends TypeAdapter<ExerciseData> {
   void write(BinaryWriter writer, ExerciseData obj) {
     writer
       ..writeByte(3)
-      ..writeByte(2)
-      ..write(obj.exerciseName)
       ..writeByte(0)
-      ..write(obj.imagePath)
+      ..write(obj.exerciseName)
       ..writeByte(1)
+      ..write(obj.imagePath)
+      ..writeByte(2)
       ..write(obj.tableData);
   }
 
