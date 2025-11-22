@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:programmes/database/boxes.dart';
 import 'package:programmes/database/workout.dart';
 import 'package:programmes/new_workout/new_exercise_card.dart';
-import 'package:programmes/pages/navigation.dart';
+import 'package:programmes/widgets/navigation.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
 import 'package:programmes/database/exercise_data.dart';
 import 'package:uuid/uuid.dart';
