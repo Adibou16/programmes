@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/login.dart';
 import 'package:programmes/auth/register.dart';
+import 'package:programmes/themes/theme_extensions.dart';
+
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColors>()!;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -15,30 +20,28 @@ class WelcomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
 
-              const Text(
+              Text(
                 "Bienvenue",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: textTheme.headlineLarge
               ),
 
               const SizedBox(height: 10),
 
-              const Text(
+              Text(
                 "Veuillez vous connecter ou créer un nouveau compte.",
                 textAlign: TextAlign.center,
+                style: textTheme.bodyMedium,
               ),
 
               const SizedBox(height: 40),
 
               // Bouton Connexion
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Login())),
-                  child: const Text(
-                    "Connexion",
+              FilledButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Login())),
+                child: Text(
+                  "Connexion",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -49,8 +52,9 @@ class WelcomePage extends StatelessWidget {
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Register())),
-                  child: const Text(
+                  child: Text(
                     "Créer un compte",
+                    style: textTheme.bodyMedium,
                   ),
                 ),
               ),

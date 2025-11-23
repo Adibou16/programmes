@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/auth_service.dart';
 import 'package:programmes/auth/login.dart';
+import 'package:programmes/themes/theme_extensions.dart';
+
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -35,6 +37,9 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColors>()!;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -46,13 +51,10 @@ class _RegisterState extends State<Register> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
+              Text(
                 "Rejoindre",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: textTheme.headlineLarge,
               ),
 
               const SizedBox(height: 40),
@@ -62,10 +64,11 @@ class _RegisterState extends State<Register> {
                 controller: emailController,
                 decoration: InputDecoration(
                   labelText: "Email",
+                  labelStyle: textTheme.bodyMedium,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+                    borderSide: BorderSide(color: colors.border),
                   ),
                 ),
               ),
@@ -78,10 +81,11 @@ class _RegisterState extends State<Register> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Mot de passe",
+                  labelStyle: textTheme.bodyMedium,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+                    borderSide: BorderSide(color: colors.border),
                   ),
                 ),
               ),
@@ -90,24 +94,19 @@ class _RegisterState extends State<Register> {
 
               Text(
                 errorMessage,
-                style: const TextStyle(color: Colors.redAccent),
+                style: textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
               ),
 
               const SizedBox(height: 10),
 
               // Login button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+              FilledButton(
                 onPressed: () => register(),
-                child: const Text(
+                child: Text(
                   "Créer mon compte",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
 
@@ -118,8 +117,9 @@ class _RegisterState extends State<Register> {
                   Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
                 },
-                child: const Text(
+                child: Text(
                   "J'ai déjà un compte",
+                  style: textTheme.bodyMedium,
                 ),
               ),
             ],

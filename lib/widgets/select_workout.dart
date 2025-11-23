@@ -62,10 +62,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
             setState(() {
               boxWorkouts.delete(workoutKey);
             });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Supprimer "$title"')),
-            );
+           
           },
 
           child: Card(

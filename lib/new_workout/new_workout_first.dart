@@ -22,8 +22,8 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
   double height = MediaQuery.of(context).size.height;
 
   final colors = Theme.of(context).extension<AppColors>()!;
-  TextStyle inputStyle = TextStyle(color: colors.tableHeader, fontSize: height * 0.03);
-  TextStyle inputLabelStyle = TextStyle(color: colors.tableText, fontSize: height * 0.025);
+  TextStyle inputStyle = TextStyle(color: colors.header, fontSize: height * 0.03);
+  TextStyle inputLabelStyle = TextStyle(color: colors.text, fontSize: height * 0.025);
 
 
     return Scaffold(
@@ -44,7 +44,7 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
                   labelText: 'Nom du workout',
                   labelStyle: inputLabelStyle,
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: colors.tableBorder),
+                    borderSide: BorderSide(color: colors.border),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
@@ -62,7 +62,7 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
                   labelText: 'Description du workout',
                   labelStyle: inputLabelStyle,
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: colors.tableBorder),
+                    borderSide: BorderSide(color: colors.border),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
@@ -77,7 +77,7 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
               child: Text(
                 'Nombre de Semaines',
                 style: TextStyle(
-                  color: colors.tableHeader,
+                  color: colors.header,
                   fontSize: height * 0.03,
                   ),
               ),
@@ -97,7 +97,7 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
                 fontSize: height * 0.04,
               ),
               textStyle: TextStyle(
-                color: colors.tableText,
+                color: colors.text,
                 fontSize: height * 0.025,
               ),
               axis: Axis.horizontal,

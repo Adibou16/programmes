@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/auth_service.dart';
 import 'package:programmes/auth/register.dart';
+import 'package:programmes/themes/theme_extensions.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -35,6 +37,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColors>()!;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -46,13 +51,10 @@ class _LoginState extends State<Login> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
+              Text(
                 "Connexion",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: textTheme.headlineLarge
               ),
 
               const SizedBox(height: 40),
@@ -62,10 +64,11 @@ class _LoginState extends State<Login> {
                 controller: emailController,
                 decoration: InputDecoration(
                   labelText: "Email",
+                  labelStyle: textTheme.bodyMedium,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+                    borderSide: BorderSide(color: colors.border),
                   ),
                 ),
               ),
@@ -78,10 +81,11 @@ class _LoginState extends State<Login> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Mot de passe",
+                  labelStyle: textTheme.bodyMedium,
                   filled: true,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+                    borderSide: BorderSide(color: colors.border),
                   ),
                 ),
               ),
@@ -90,15 +94,18 @@ class _LoginState extends State<Login> {
 
               Text(
                 errorMessage,
-                style: const TextStyle(color: Colors.redAccent),
+                style: textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
               ),
 
               const SizedBox(height: 10),
 
-              TextButton(
+              FilledButton(
                 onPressed: () => login(),
-                child: const Text(
+                child: Text(
                   "Se connecter",
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
 
@@ -109,8 +116,9 @@ class _LoginState extends State<Login> {
                   Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const Register()));
                 },
-                child: const Text(
+                child: Text(
                   "Créer un compte",
+                  style: textTheme.bodyMedium,
                 ),
               ),
             ],
