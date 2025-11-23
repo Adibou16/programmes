@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:programmes/themes/theme_extensions.dart';
+
 
 class NewExerciseTable extends StatefulWidget {
   final int weeks;
@@ -49,10 +51,13 @@ class _NewExerciseTableState extends State<NewExerciseTable> {
   @override
   Widget build(BuildContext context) {
     final headers = ["Séries", "Répétitions", "Repos"];
+    
     final width = MediaQuery.of(context).size.width;
-    final titleStyle = TextStyle(color: Colors.grey[300], fontSize: width * 0.035);
-    final headingStyle = TextStyle(color: Colors.grey[350], fontWeight: FontWeight.bold, fontSize: width * 0.03, overflow: TextOverflow.ellipsis);
-    final dataStyle = TextStyle(color: Colors.grey[400], fontSize: width * 0.03);
+    final colors = Theme.of(context).extension<AppColors>()!;
+
+    final titleStyle = TextStyle(color: colors.tableHeader, fontSize: width * 0.035);
+    final headingStyle = TextStyle(color: colors.tableHeader, fontWeight: FontWeight.bold, fontSize: width * 0.03, overflow: TextOverflow.ellipsis);
+    final dataStyle = TextStyle(color: colors.tableText, fontSize: width * 0.03);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,7 +73,7 @@ class _NewExerciseTableState extends State<NewExerciseTable> {
 
           return Table(
             columnWidths: columnWidths,
-            border: TableBorder.all(width: 1.0, color: Colors.grey),
+            border: TableBorder.all(width: 1.0, color: colors.tableBorder),
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             children: [
               // Header row
@@ -103,7 +108,7 @@ class _NewExerciseTableState extends State<NewExerciseTable> {
           Center(
             child: TextField(
               controller: controllers[rowIndex][col],
-              style: TextStyle(color: Colors.blue[600], fontSize: dataStyle.fontSize, overflow: TextOverflow.fade),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: dataStyle.fontSize, overflow: TextOverflow.fade),
               textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],

@@ -3,6 +3,8 @@ import 'package:programmes/widgets/image_gallery.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import 'dart:io';
+import 'package:programmes/themes/theme_extensions.dart';
+
 
 
 class NewExerciseImage extends StatefulWidget {
@@ -55,22 +57,23 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    final colors = Theme.of(context).extension<AppColors>()!;
 
     return Column(
       children: [
         TextField(
           controller: nameController,
-          style: const TextStyle(color: Colors.white),
+          style: TextStyle(color: colors.tableText),
           decoration: InputDecoration(
             constraints: BoxConstraints(maxWidth: width * 0.35),
             labelText: 'Nom',
             isDense: true,
-            labelStyle: TextStyle(color: Colors.grey[400], fontSize: width * 0.045),
+            labelStyle: TextStyle(color: colors.tableHeader, fontSize: width * 0.045),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey[700]!),
+              borderSide: BorderSide(color: colors.tableBorder),
             ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blue),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
             ),
           ),
 
@@ -128,8 +131,8 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
           width: width * 0.3,
           height: width * 0.3,
           child: Icon(
-            Icons.image_search, 
-            color: Colors.white, 
+            Icons.image_search,  
+            color: Colors.white,
             size: width * 0.1,
             ),
           ),
