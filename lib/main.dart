@@ -13,7 +13,7 @@ Future<void> main() async {
   boxWorkouts = await Hive.openBox<Workout>('workoutBox');
 
   runApp(MaterialApp(
-    theme: darkMode,
+    theme: lightMode,
     initialRoute: "/navigation",
     routes: {
       "/navigation": (context) => const Navigation(),

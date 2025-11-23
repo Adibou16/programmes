@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:programmes/new_workout/new_workout_second.dart';
+import 'package:programmes/themes/theme_extensions.dart';
+
 
 class NewWorkoutFirst extends StatefulWidget {
   const NewWorkoutFirst({super.key});
@@ -18,8 +20,10 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
   Widget build(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
   double height = MediaQuery.of(context).size.height;
-  TextStyle inputStyle = TextStyle(color: Colors.white, fontSize: height * 0.03);
-  TextStyle inputLabelStyle = TextStyle(color: Colors.grey[400], fontSize: height * 0.025);
+
+  final colors = Theme.of(context).extension<AppColors>()!;
+  TextStyle inputStyle = TextStyle(color: colors.tableHeader, fontSize: height * 0.03);
+  TextStyle inputLabelStyle = TextStyle(color: colors.tableText, fontSize: height * 0.025);
 
 
     return Scaffold(
@@ -31,32 +35,38 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           children: [
-            TextField(
-              controller: titleController,
-              style: inputStyle,
-              decoration: InputDecoration(
-                labelText: 'Nom du workout',
-                labelStyle: inputLabelStyle,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[700]!),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: titleController,
+                style: inputStyle,
+                decoration: InputDecoration(
+                  labelText: 'Nom du workout',
+                  labelStyle: inputLabelStyle,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: colors.tableBorder),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+                  ),
                 ),
               ),
             ),
         
-            TextField(
-              controller: descriptionController,
-              style: inputStyle,
-              decoration: InputDecoration(
-                labelText: 'Description du workout',
-                labelStyle: inputLabelStyle,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey[700]!),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: descriptionController,
+                style: inputStyle,
+                decoration: InputDecoration(
+                  labelText: 'Description du workout',
+                  labelStyle: inputLabelStyle,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: colors.tableBorder),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+                  ),
                 ),
               ),
             ),
@@ -67,7 +77,7 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
               child: Text(
                 'Nombre de Semaines',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: colors.tableHeader,
                   fontSize: height * 0.03,
                   ),
               ),
@@ -83,8 +93,12 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
                 });
               },
               selectedTextStyle: TextStyle(
-                color: Colors.blue,
+                color: Theme.of(context).colorScheme.primary,
                 fontSize: height * 0.04,
+              ),
+              textStyle: TextStyle(
+                color: colors.tableText,
+                fontSize: height * 0.025,
               ),
               axis: Axis.horizontal,
               itemWidth: width / 5,
