@@ -12,16 +12,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar( // App Bar
+      appBar: AppBar(
         title: const Text("Acceuil"),
-        backgroundColor: Colors.grey[850],
-        centerTitle: true,
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        ),
       ),
       
       body: SelectWorkout(),

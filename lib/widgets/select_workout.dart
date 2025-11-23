@@ -40,19 +40,12 @@ class _SelectWorkoutState extends State<SelectWorkout> {
             final bool? confirm = await showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                backgroundColor: Colors.grey[900],
-                title: const Text(
-                  "Supprimer programme d'entrainement",
-                  style: TextStyle(color: Colors.white),
-                ),
-                content: Text(
-                  'Voulez-vous vraiment supprimer "$title"?',
-                  style: const TextStyle(color: Colors.white70),
-                ),
+                title: const Text("Supprimer programme d'entrainement",),
+                content: Text('Voulez-vous vraiment supprimer "$title"?',),
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(false),
-                    child: const Text('Non', style: TextStyle(color: Colors.white70)),
+                    child: const Text('Non'),
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(true),
@@ -71,18 +64,16 @@ class _SelectWorkoutState extends State<SelectWorkout> {
             });
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                backgroundColor: Colors.grey[900],
-                content: Text('Supprimer "$title"', style: const TextStyle(color: Colors.white))),
+                content: Text('Supprimer "$title"')),
             );
           },
 
           child: Card(
-            color: Colors.grey[900],
             margin: const EdgeInsets.all(10.0),
             child: ListTile(
-              title: Text(title, style: const TextStyle(color: Colors.white)),
-              subtitle: Text(workout.description, style: const TextStyle(color: Colors.white)),
-              trailing: const Icon(Icons.arrow_forward, color: Colors.white),
+              title: Text(title),
+              subtitle: Text(workout.description),
+              trailing: const Icon(Icons.arrow_forward),
               onTap: () async {
                 await Navigator.push(
                   context,

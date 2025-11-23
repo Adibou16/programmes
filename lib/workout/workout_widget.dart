@@ -40,13 +40,7 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
-        backgroundColor: Colors.grey[850],
-        centerTitle: true,
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        ),
+ 
         actions: <Widget> [
           CircleAvatar(
             backgroundColor: Colors.blue,
@@ -56,13 +50,12 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
                 showDialog(
                   context: context, 
                   builder: (context) => AlertDialog(
-                    backgroundColor: Colors.grey[900],
-                    title: const Text("Modifier programme d'entrainement", style: TextStyle(color: Colors.white70)),
-                    content: Text('Voulez-vous modifier "$name"?', style: const TextStyle(color: Colors.white70)),
+                    title: const Text("Modifier programme d'entrainement"),
+                    content: Text('Voulez-vous modifier "$name"?'),
                     actions: [
                       MaterialButton(
                         onPressed: () => Navigator.pop(context), 
-                        child: const Text('Non', style: TextStyle(color: Colors.white70))
+                        child: const Text('Non')
                       ),
 
                       MaterialButton(
@@ -98,7 +91,6 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
         ],
       ),
 
-      backgroundColor: Colors.black,
 
       body: ListView.builder(
         itemCount: exercises.length,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:programmes/database/boxes.dart';
+import 'package:programmes/themes/theme_extensions.dart';
+
 
 // ignore: must_be_immutable
 class ExerciseTable extends StatefulWidget {
@@ -73,10 +75,8 @@ class _ExerciseTableState extends State<ExerciseTable> {
   Widget build(BuildContext context) {
     final headers = ["Séries", "Répétitions", "Repos", "Charge"];
     List<List<int>> tableData = widget.tableData;
+
     final width = MediaQuery.of(context).size.width;
-    final titleStyle = TextStyle(color: Colors.grey[300], fontSize: width * 0.035);
-    final headingStyle = TextStyle(color: Colors.grey[350], fontWeight: FontWeight.bold, fontSize: width * 0.03);
-    final dataStyle = TextStyle(color: Colors.grey[400], fontSize: width * 0.03);
 
     final workoutKey = 'key_${widget.workoutName}';
 
@@ -85,6 +85,13 @@ class _ExerciseTableState extends State<ExerciseTable> {
       final row = tableData[rowIndex];
 
       return TableRow(
+    final colors = Theme.of(context).extension<AppColors>()!;
+    final titleStyle = TextStyle(color: colors.tableHeader, fontSize: width * 0.035);
+    final headingStyle = TextStyle(color: colors.tableHeader, fontWeight: FontWeight.bold, fontSize: width * 0.03, overflow: TextOverflow.ellipsis);
+    final dataStyle = TextStyle(color: colors.tableText, fontSize: width * 0.03);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           
           // First three columns
@@ -96,6 +103,26 @@ class _ExerciseTableState extends State<ExerciseTable> {
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
+            return Table(
+              columnWidths: columnWidths,
+              border: TableBorder.all(width: 1.0, color: colors.tableBorder),
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              children: [
+                // Header row
+                TableRow(
+                  decoration: const BoxDecoration(),
+                  children: headers.map((h) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
+                    child: Center(
+                      child: Text(
+                        h,
+                        style: headingStyle,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                  )).toList(),
                 ),
               ),
 
@@ -174,6 +201,41 @@ class _ExerciseTableState extends State<ExerciseTable> {
             ],
           );
         }),
+            ),
+
+        // Last column with TextField
+        TextField(
+          controller: rowController,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: dataStyle.fontSize),
+          keyboardType: TextInputType.number,
+          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+          decoration: InputDecoration(
+            isDense: true,
+            contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
+            hintText: "poids (lbs)",
+            hintStyle: dataStyle,
+            border: InputBorder.none,
+          ),
+        
+          onChanged: (value) {
+            try {
+              final int newVal = int.tryParse(value) ?? 0;
+        
+              if (widget.workoutIndex == null || widget.exerciseIndex == null) return;
+        
+              final workout = boxWorkouts.getAt(widget.workoutIndex!);
+              final ex = workout.exercises[widget.exerciseIndex];
+              ex.tableData[rowIndex][3] = newVal;
+              
+              workout.exercises[widget.exerciseIndex] = ex;
+              boxWorkouts.putAt(widget.workoutIndex!, workout);
+            }
+            catch (e) {
+              print("ERROR: $e");
+            }
+          },
+        ),
       ],
     );
   }
