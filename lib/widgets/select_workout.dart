@@ -24,10 +24,10 @@ class _SelectWorkoutState extends State<SelectWorkout> {
 
         Workout workout = boxWorkouts.getAt(index);
         String title = workout.title;
-        String workoutKey = 'key_$title'; // Get the actual key
+        String workoutKey = 'key_$title';
 
         return Dismissible(
-          key: ValueKey(workoutKey), // Use the workout key instead of index
+          key: ValueKey(workoutKey), 
           direction: DismissDirection.endToStart,
           background: Container(
             color: Colors.red[700],
@@ -60,7 +60,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
 
           onDismissed: (direction) {
             setState(() {
-              boxWorkouts.delete(workoutKey); // Delete by key instead of index
+              boxWorkouts.delete(workoutKey);
             });
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

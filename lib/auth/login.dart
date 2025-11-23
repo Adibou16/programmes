@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/auth_service.dart';
-import 'package:programmes/auth/login.dart';
+import 'package:programmes/auth/register.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Login> createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
+class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   String errorMessage = '';
@@ -22,9 +22,9 @@ class _RegisterState extends State<Register> {
     super.dispose();
   }
 
-  void register() async {
+  void login() async {
     try {
-      await authService.value.createAccount(email: emailController.text, password: passwordController.text);
+      await authService.value.signIn(email: emailController.text, password: passwordController.text);
       Navigator.pop(context);
     } on FirebaseException catch (e) {
       setState(() {
@@ -47,7 +47,7 @@ class _RegisterState extends State<Register> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
-                "Rejoindre",
+                "Connexion",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 32,
@@ -95,19 +95,10 @@ class _RegisterState extends State<Register> {
 
               const SizedBox(height: 10),
 
-              // Login button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () => register(),
+              TextButton(
+                onPressed: () => login(),
                 child: const Text(
-                  "Créer mon compte",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  "Se connecter",
                 ),
               ),
 
@@ -116,10 +107,10 @@ class _RegisterState extends State<Register> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Register()));
                 },
                 child: const Text(
-                  "J'ai déjà un compte",
+                  "Créer un compte",
                 ),
               ),
             ],
