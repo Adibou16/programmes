@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:programmes/themes/theme_extensions.dart';
 
 
 class ExerciseImage extends StatefulWidget {
@@ -23,7 +24,10 @@ class _ExerciseImageState extends State<ExerciseImage> {
   Widget build(BuildContext context) {
     String imageName = widget.exerciseName;
     String imagePath = widget.imagePath;
+
     double width = MediaQuery.of(context).size.width;
+    final colors = Theme.of(context).extension<AppColors>()!;
+
 
     return Column(
       children: [
@@ -34,7 +38,7 @@ class _ExerciseImageState extends State<ExerciseImage> {
             child: Text(
               imageName,
               maxLines: 2,
-              style: TextStyle(color: Colors.grey[300]),
+              style: TextStyle(color: colors.tableHeader),
             ),
           ),
         ),

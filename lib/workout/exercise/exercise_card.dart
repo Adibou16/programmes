@@ -35,7 +35,6 @@ class _ExerciseCardState extends State<ExerciseCard> {
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,
-      color: Colors.grey[900],
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

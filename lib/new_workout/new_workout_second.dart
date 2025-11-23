@@ -96,16 +96,9 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
     final description = widget.description;
 
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(name),
-        backgroundColor: Colors.grey[850],
-        centerTitle: true,
-        titleTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-        ),
+
         actions: <Widget> [
           CircleAvatar(
             backgroundColor: Colors.blue,
@@ -115,13 +108,12 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                 showDialog(
                   context: context, 
                   builder: (context) => AlertDialog(
-                    backgroundColor: Colors.grey[900],
-                    title: const Text("Sauvegarder programme d'entrainement", style: TextStyle(color: Colors.white70)),
-                    content: Text('Voulez-vous enregistrer "$name"?', style: const TextStyle(color: Colors.white70)),
+                    title: const Text("Sauvegarder programme d'entrainement"),
+                    content: Text('Voulez-vous enregistrer "$name"?'),
                     actions: [
                       MaterialButton(
                         onPressed: () => Navigator.pop(context), 
-                        child: const Text('Non', style: TextStyle(color: Colors.white70))
+                        child: const Text('Non')
                       ),
                       MaterialButton(
                         onPressed: () {
@@ -145,8 +137,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                             );
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                backgroundColor: Colors.grey[900],
-                                content: Text('Sauvegarder "$name"', style: const TextStyle(color: Colors.white))),
+                                content: Text('Sauvegarder "$name"')),
                             );
                           });
                           Navigator.pushAndRemoveUntil(
@@ -212,13 +203,12 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                             showDialog(
                               context: context, 
                               builder: (context) => AlertDialog(
-                                backgroundColor: Colors.grey[900],
                                 title: const Text("Erreur", style: TextStyle(color: Colors.redAccent)),
-                                content: const Text("Un programme d'entrainement doit contenir au moins 1 exercice.", style: TextStyle(color: Colors.white70)),
+                                content: const Text("Un programme d'entrainement doit contenir au moins 1 exercice."),
                                 actions: [
                                   MaterialButton(
                                     onPressed: () => Navigator.pop(context), 
-                                    child: const Text('Continuer', style: TextStyle(color: Colors.white70))
+                                    child: const Text('Continuer')
                                   ),
                                  
                                 ],

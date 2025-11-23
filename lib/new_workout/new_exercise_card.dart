@@ -67,7 +67,6 @@ class _NewExerciseCardState extends State<NewExerciseCard> {
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAlias,
-      color: Colors.grey[900],
       child: Column(
         children: [
           
