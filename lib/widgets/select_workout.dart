@@ -14,6 +14,8 @@ class SelectWorkout extends StatefulWidget {
 class _SelectWorkoutState extends State<SelectWorkout> {
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return ListView.builder(
       itemCount: boxWorkouts.length,
       itemBuilder: (context, index) {
@@ -30,7 +32,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
           key: ValueKey(workoutKey), 
           direction: DismissDirection.endToStart,
           background: Container(
-            color: Colors.red[700],
+            color: Colors.redAccent,
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: const Icon(Icons.delete, color: Colors.white),
@@ -49,7 +51,7 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                   ),
                   TextButton(
                     onPressed: () => Navigator.of(context).pop(true),
-                    child: const Text('Supprimer', style: TextStyle(color: Colors.red)),
+                    child: const Text('Supprimer', style: TextStyle(color: Colors.redAccent)),
                   ),
                 ],
               ),
@@ -66,10 +68,10 @@ class _SelectWorkoutState extends State<SelectWorkout> {
           },
 
           child: Card(
-            margin: const EdgeInsets.all(10.0),
+            margin: const EdgeInsets.all(8.0),
             child: ListTile(
-              title: Text(title),
-              subtitle: Text(workout.description),
+              title: Text(title, style: textTheme.bodyLarge),
+              subtitle: Text(workout.description, style: textTheme.bodySmall),
               trailing: const Icon(Icons.arrow_forward),
               onTap: () async {
                 await Navigator.push(

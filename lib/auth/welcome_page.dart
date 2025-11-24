@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/login.dart';
 import 'package:programmes/auth/register.dart';
-import 'package:programmes/themes/theme_extensions.dart';
 
 
 class WelcomePage extends StatelessWidget {
@@ -9,7 +8,6 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppColors>()!;
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(

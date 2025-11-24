@@ -22,8 +22,7 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
   double height = MediaQuery.of(context).size.height;
 
   final colors = Theme.of(context).extension<AppColors>()!;
-  TextStyle inputStyle = TextStyle(color: colors.header, fontSize: height * 0.03);
-  TextStyle inputLabelStyle = TextStyle(color: colors.text, fontSize: height * 0.025);
+  final textTheme = Theme.of(context).textTheme;
 
 
     return Scaffold(
@@ -31,103 +30,94 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
         title: const Text('Nouveau workout'),
       ),
       body: Center(
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          shrinkWrap: true,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: titleController,
-                style: inputStyle,
-                decoration: InputDecoration(
-                  labelText: 'Nom du workout',
-                  labelStyle: inputLabelStyle,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: colors.border),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
-                  ),
-                ),
-              ),
-            ),
-        
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(12.0),
+          child: Column (
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextField(
                 controller: descriptionController,
-                style: inputStyle,
                 decoration: InputDecoration(
                   labelText: 'Description du workout',
-                  labelStyle: inputLabelStyle,
-                  enabledBorder: OutlineInputBorder(
+                  labelStyle: textTheme.bodyMedium,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(color: colors.border),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+                ),
+              ),
+
+              const SizedBox(height: 20.0),
+          
+              TextField(
+                controller: titleController,
+                decoration: InputDecoration(
+                  labelText: 'Nom du workout',
+                  labelStyle: textTheme.bodyMedium,
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: colors.border),
                   ),
                 ),
               ),
-            ),
-        
-            SizedBox(height: height * 0.06),
-        
-            Center(
-              child: Text(
-                'Nombre de Semaines',
-                style: TextStyle(
-                  color: colors.header,
-                  fontSize: height * 0.03,
-                  ),
-              ),
-            ),
-        
-            NumberPicker(
-              minValue: 1,
-              maxValue: 9, 
-              value: weeks, 
-              onChanged: (value) {
-                setState(() {
-                  weeks = value;
-                });
-              },
-              selectedTextStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontSize: height * 0.04,
-              ),
-              textStyle: TextStyle(
-                color: colors.text,
-                fontSize: height * 0.025,
-              ),
-              axis: Axis.horizontal,
-              itemWidth: width / 5,
-              itemCount: 5,
-            ),
-        
-            SizedBox(height: height * 0.06),
-        
-            CircleAvatar(
-              radius: height * 0.05,
-              backgroundColor: Colors.blue,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.push( 
-                    context, 
-                    MaterialPageRoute(builder: (context) => NewWorkoutSecond(
-                      name: titleController.text,
-                      description:  descriptionController.text,
-                      weeks: weeks
-                    ))
-                  );
-                }, 
-                icon: const Icon(
-                  Icons.navigate_next, 
-                  color: Colors.black, 
+          
+              const SizedBox(height: 30),
+          
+              Center(
+                child: Text(
+                  'Nombre de Semaines',
+                  style: textTheme.headlineMedium
                 ),
               ),
-            )
-          ]
+          
+              const SizedBox(height: 10),
+
+              NumberPicker(
+                minValue: 1,
+                maxValue: 9, 
+                value: weeks, 
+                onChanged: (value) {
+                  setState(() {
+                    weeks = value;
+                  });
+                },
+                selectedTextStyle: textTheme.bodyLarge?.copyWith(color: Colors.blue),
+                textStyle: textTheme.bodyMedium,
+                axis: Axis.horizontal,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(color: colors.border)
+                ),
+                itemWidth: (width - 24) / 5,
+                itemCount: 5,
+              ),
+          
+              const SizedBox(height: 30),
+          
+              CircleAvatar(
+                radius: height * 0.05,
+                backgroundColor: Colors.blue,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push( 
+                      context, 
+                      MaterialPageRoute(builder: (context) => NewWorkoutSecond(
+                        name: titleController.text,
+                        description:  descriptionController.text,
+                        weeks: weeks
+                      ))
+                    );
+                  }, 
+                  icon: const Icon(
+                    Icons.navigate_next, 
+                    color: Colors.black, 
+                  ),
+                ),
+              )
+            ]
+          ),
         ),
       ),
     );

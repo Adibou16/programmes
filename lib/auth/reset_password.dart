@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/auth_service.dart';
+import 'package:programmes/themes/theme_extensions.dart';
+
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({super.key});
@@ -38,46 +40,62 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<AppColors>()!;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Center(
-              child: Text("Réinitialiser le mot de passe"),
-            ),
-
-            const SizedBox(height: 10),
-
-            // Email
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: "Email",
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+      
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                "Réinitialiser le mot de passe",
+                textAlign: TextAlign.center,
+                style: textTheme.headlineMedium,
+              ),
+          
+              const SizedBox(height: 10),
+          
+              // Email
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                    labelStyle: textTheme.bodyMedium,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: colors.border),
+                    ),
                 ),
               ),
-            ),
-
-            const SizedBox(height: 10),
-
-            Text(
-              errorMessage,
-              style: const TextStyle(color: Colors.redAccent),
-            ),
-
-            const SizedBox(height: 10),
-
-            TextButton(
-              onPressed: () => resetPassword(), 
-              child: const Text("Changer le mot de passe"),
-            )
-          ],
+          
+              const SizedBox(height: 10),
+          
+              Text(
+                errorMessage,
+                style: const TextStyle(color: Colors.redAccent),
+              ),
+          
+              const SizedBox(height: 10),
+          
+              FilledButton(
+                onPressed: () => resetPassword(), 
+                child: Text(
+                  "Changer le mot de passe",
+                  style: textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+              )
+            ],
+          ),
         ),
       ),
     );

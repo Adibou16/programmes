@@ -21,7 +21,7 @@ Future<void> main() async {
   );
 
   runApp(MaterialApp(
-    theme: lightMode,
+    theme: darkMode,
     initialRoute: "/navigation",
     routes: {
       "/navigation": (context) => const AuthLayout(),

@@ -19,10 +19,20 @@ ThemeData lightMode = ThemeData(
       fontSize: AppThemeValues.largeFont,
       fontWeight: FontWeight.bold,
       color: Colors.black,
-    )
-    ,
+    ),
+
+    bodyLarge: TextStyle(
+      fontSize: AppThemeValues.largeFont,
+      color: Colors.black,
+    ),
+
     bodyMedium: TextStyle(
       fontSize: AppThemeValues.mediumFont,
+      color: Colors.black,
+    ),
+
+    bodySmall: TextStyle(
+      fontSize: AppThemeValues.smallFont,
       color: Colors.black,
     ),
   ),
@@ -99,8 +109,18 @@ ThemeData darkMode = ThemeData(
       color: Colors.white,
     ),
 
+    bodyLarge: TextStyle(
+      fontSize: AppThemeValues.largeFont,
+      color: Colors.white,
+    ),
+
     bodyMedium: TextStyle(
       fontSize: AppThemeValues.mediumFont,
+      color: Colors.white,
+    ),
+
+    bodySmall: TextStyle(
+      fontSize: AppThemeValues.smallFont,
       color: Colors.white,
     ),
   ), 
