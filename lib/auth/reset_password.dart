@@ -80,7 +80,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           
               Text(
                 errorMessage,
-                style: const TextStyle(color: Colors.redAccent),
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
               ),
           
               const SizedBox(height: 10),
@@ -88,7 +88,7 @@ class _ResetPasswordState extends State<ResetPassword> {
               FilledButton(
                 onPressed: () => resetPassword(), 
                 child: Text(
-                  "Changer le mot de passe",
+                  "Réinitialiser le mot de passe",
                   style: textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

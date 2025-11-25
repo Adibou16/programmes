@@ -10,14 +10,17 @@ class Profile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profil"),
+
+        actions: <Widget> [
+          CircleAvatar(
+            backgroundColor: Colors.blue,
+            child: IconButton(
+              icon: const Icon(Icons.settings, color: Colors.black),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Settings())),
+            )
+          )
+        ]
       ),
-      body: const Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Settings(),
-        ],
-      )
     );
   }
 }

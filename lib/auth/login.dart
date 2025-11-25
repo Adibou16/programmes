@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/auth_service.dart';
 import 'package:programmes/auth/register.dart';
+import 'package:programmes/auth/reset_password.dart';
 import 'package:programmes/themes/theme_extensions.dart';
 
 
@@ -112,11 +113,26 @@ class _LoginState extends State<Login> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ResetPassword()));
+                },
+                child: Text(
+                  "Réinitialiser le mot de passe",
+                  style: textTheme.bodyMedium
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const Register()));
                 },
                 child: Text(
                   "Créer un compte",
-                  style: textTheme.bodyMedium,
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

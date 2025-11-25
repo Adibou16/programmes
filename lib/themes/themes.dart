@@ -166,6 +166,7 @@ ThemeData darkMode = ThemeData(
   colorScheme: ColorScheme.dark(
     surface: Colors.grey.shade900, 
     primary: Colors.blue,
+    error: Colors.redAccent
   ),
 
   extensions: [

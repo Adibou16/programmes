@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:programmes/auth/register.dart';
 import 'package:programmes/new_workout/new_workout_first.dart';
 import 'package:programmes/profile/profile.dart';
 import 'package:programmes/widgets/home.dart';
