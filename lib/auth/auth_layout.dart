@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/auth_service.dart';
+import 'package:programmes/auth/verify_email.dart';
 import 'package:programmes/auth/welcome_page.dart';
-import 'package:programmes/widgets/loading_page.dart';
 import 'package:programmes/widgets/navigation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthLayout extends StatelessWidget {
   final Widget? pageIfNotConnected;
@@ -13,20 +14,22 @@ class AuthLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: authService, 
-      builder: (context, authService, child) {
-        return StreamBuilder(
-          stream: authService.authStateChanges, 
+      builder: (context, auth, child) {
+        return StreamBuilder<User?>(
+          stream: authService.value.authStateChanges,
           builder: (context, snapshot) {
-            Widget widget;
-            if (snapshot.connectionState ==  ConnectionState.waiting) {
-              widget = const LoadingPage();
-            } else if (snapshot.hasData ) {
-              widget = const Navigation();
-            } else {
-              widget = pageIfNotConnected ?? const WelcomePage();
+            final user = snapshot.data;
+
+            if (user == null) {
+              return const WelcomePage();
             }
-            return widget;
-          }
+
+            if (!user.emailVerified) {
+              return const VerifyEmail();
+            }
+
+            return const Navigation();
+          },
         );
       }
     );

@@ -22,12 +22,13 @@ class _ChangeUsernameState extends State<ChangeUsername> {
   void changeUsername() async {
     try {
       await authService.value.updateUsername(username: usernameController.text);  
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
         content: const Text("Votre nom d'utilisateur a été changé")
-        )
+        ),
       );
+      Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
