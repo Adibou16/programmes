@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:programmes/database/boxes.dart';
 import 'package:programmes/workout/workout_widget.dart';
 import 'package:programmes/database/workout.dart';
+import 'package:programmes/database/workout_repository.dart';
 
 
 class SelectWorkout extends StatefulWidget {
@@ -12,24 +12,28 @@ class SelectWorkout extends StatefulWidget {
 }
 
 class _SelectWorkoutState extends State<SelectWorkout> {
+  final WorkoutRepository repo = WorkoutRepository();
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
+    final workouts = repo.getAllWorkouts();
+
     return ListView.builder(
-      itemCount: boxWorkouts.length,
+      itemCount: workouts.length,
       itemBuilder: (context, index) {
 
-        if (index >= boxWorkouts.length) {
+        if (index >= workouts.length) {
           return const SizedBox.shrink();
         }
 
-        Workout workout = boxWorkouts.getAt(index);
+        Workout workout = workouts[index];
         String title = workout.title;
-        String workoutKey = 'key_$title';
+        final workoutId = workout.id;
 
         return Dismissible(
-          key: ValueKey(workoutKey), 
+          key: ValueKey(workoutId), 
           direction: DismissDirection.endToStart,
           background: Container(
             color: Colors.redAccent,
@@ -60,11 +64,9 @@ class _SelectWorkoutState extends State<SelectWorkout> {
             return confirm ?? false;
           },
 
-          onDismissed: (direction) {
-            setState(() {
-              boxWorkouts.delete(workoutKey);
-            });
-           
+          onDismissed: (direction) async {
+           await repo.deleteWorkout(workoutId);
+           if (mounted) setState(() {});
           },
 
           child: Card(
@@ -79,15 +81,14 @@ class _SelectWorkoutState extends State<SelectWorkout> {
                   MaterialPageRoute(
                     builder: (context) => WorkoutWidget(
                       exercises: workout.exercises,
-                      workoutKey: workoutKey, 
+                      workoutId: workoutId, 
                       name: title,
                     ),
                   ),
                 );
                 
                 // Refresh the list when coming back
-                if (mounted) {
-                  setState(() {});
+                if (mounted) {setState(() {});
                 }
               },
             ),

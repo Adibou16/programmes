@@ -87,7 +87,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
                       ),
                     ),
                   );
-
                   await FirebaseAuth.instance.signOut();
                 },
                 child: const Text("Annuler"),

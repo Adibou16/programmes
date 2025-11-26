@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:programmes/database/boxes.dart';
 import 'package:programmes/database/workout.dart';
 import 'package:programmes/new_workout/new_exercise_card.dart';
 import 'package:programmes/widgets/navigation.dart';
 import 'package:programmes/workout/exercise/exercise_card.dart';
 import 'package:programmes/database/exercise_data.dart';
 import 'package:uuid/uuid.dart';
+import 'package:programmes/database/workout_repository.dart';
+
 
 class NewWorkoutSecond extends StatefulWidget {
   final String name;
@@ -116,34 +117,35 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                         child: const Text('Non')
                       ),
                       MaterialButton(
-                        onPressed: () {
-                          setState(() {
-                            boxWorkouts.put(
-                              'key_$name',
-                              Workout(
-                                title: name,
-                                description: description,
-                                exercises: exercisesData
-                                  .map((e) {
-                                    final ExerciseCard card = e['data'] as ExerciseCard;
-                                    return ExerciseData(
-                                      exerciseName: card.exerciseName,
-                                      imagePath: card.imagePath,
-                                      tableData: card.tableData,
-                                    );
-                                  })
-                                  .toList(),
-                              ),
+                        onPressed: () async {
+                          final key = const Uuid().v4();
+                          final workout = Workout(
+                              id: key,
+                              title: name,
+                              description: description,
+                              exercises: exercisesData
+                                .map((e) {
+                                  final ExerciseCard card = e['data'] as ExerciseCard;
+                                  return ExerciseData(
+                                    exerciseName: card.exerciseName,
+                                    imagePath: card.imagePath,
+                                    tableData: card.tableData,
+                                  );
+                                })
+                                .toList(),
                             );
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Sauvegarder "$name"')),
-                            );
-                          });
+
+                          final repo = WorkoutRepository();
+                          await repo.uploadWorkout(key, workout);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Sauvegarder "$name"')),
+                          );
                           Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => Navigation()),
-                            ModalRoute.withName('/'),
+                            MaterialPageRoute(builder: (context) => const Navigation()),
+                            (route) => false,
                           );
                         }, 
                         child: const Text('Sauvegarder', style: TextStyle(color: Colors.blue))

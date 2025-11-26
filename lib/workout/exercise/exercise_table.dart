@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:programmes/database/boxes.dart';
 import 'package:programmes/themes/theme_extensions.dart';
+import 'package:programmes/database/workout_repository.dart';
 
 
-// ignore: must_be_immutable
 class ExerciseTable extends StatefulWidget {
   final List<List<int>> tableData;
-  final String? workoutName;
+  final String? workoutId;
   final int? exerciseIndex;
-  const ExerciseTable({super.key, required this.tableData, this.workoutName, this.exerciseIndex});
+  const ExerciseTable({super.key, required this.tableData, this.workoutId, this.exerciseIndex});
 
   @override
   State<ExerciseTable> createState() => _ExerciseTableState();
@@ -34,30 +33,13 @@ class _ExerciseTableState extends State<ExerciseTable> {
   }
   
   void buildControllers() {
-    if (controllers.isNotEmpty) {
-      for (var c in controllers) {
-        c.dispose();
-      }
-    }
-    
+    for (var c in controllers) c.dispose();
+
     controllers = List.generate(
       widget.tableData.length,
       (i) {
-        final workoutKey = 'key_${widget.workoutName}';
-        final workout = boxWorkouts.get(workoutKey);
-        
-        if (workout != null && 
-            widget.exerciseIndex! < workout.exercises.length &&
-            i < workout.exercises[widget.exerciseIndex].tableData.length) {
-          final dbValue = workout.exercises[widget.exerciseIndex].tableData[i][3];
-          return TextEditingController(
-            text: dbValue == 0 ? "" : dbValue.toString(),
-          );
-        }
-        
-        return TextEditingController(
-          text: widget.tableData[i][3] == 0 ? "" : widget.tableData[i][3].toString(),
-        );
+        final value = widget.tableData[i][3];
+        return TextEditingController(text: value == 0 ? "" : value.toString());
       },
     );
   }
@@ -81,8 +63,6 @@ class _ExerciseTableState extends State<ExerciseTable> {
     final titleStyle = TextStyle(color: colors.header, fontSize: width * 0.035);
     final headingStyle = TextStyle(color: colors.header, fontWeight: FontWeight.bold, fontSize: width * 0.03, overflow: TextOverflow.ellipsis);
     final dataStyle = TextStyle(color: colors.text, fontSize: width * 0.03);
-
-    final workoutKey = 'key_${widget.workoutName}';
 
     // Data row builder 
     TableRow buildDataRow(List<int> cells, TextStyle dataStyle, int rowIndex) {
@@ -118,19 +98,18 @@ class _ExerciseTableState extends State<ExerciseTable> {
               border: InputBorder.none,
             ),
           
-            onChanged: (value) {
+            onChanged: (value) async {
               final newVal = int.tryParse(value) ?? 0;
 
               widget.tableData[rowIndex][3] = newVal;
-              
-              final workout = boxWorkouts.get(workoutKey);
-              if (workout != null) {
-                final ex = workout.exercises[widget.exerciseIndex];
-                ex.tableData[rowIndex][3] = newVal;
-                
-                workout.exercises[widget.exerciseIndex] = ex;
-                boxWorkouts.put(workoutKey, workout);
-              }        
+
+              final repo = WorkoutRepository();
+              await repo.updateExerciseValue(
+                widget.workoutId!,
+                widget.exerciseIndex!,
+                rowIndex,
+                newVal,
+              );
             },
           ),
         ],

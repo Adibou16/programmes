@@ -4,11 +4,21 @@ import 'package:programmes/auth/verify_email.dart';
 import 'package:programmes/auth/welcome_page.dart';
 import 'package:programmes/widgets/navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:programmes/database/workout_repository.dart';
+
 
 class AuthLayout extends StatelessWidget {
   final Widget? pageIfNotConnected;
 
   const AuthLayout({super.key, this.pageIfNotConnected});
+
+  void onLoginSuccess() async {
+    final repo = WorkoutRepository();
+
+    await repo.downloadWorkouts();
+
+    repo.liveSync();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +38,7 @@ class AuthLayout extends StatelessWidget {
               return const VerifyEmail();
             }
 
+            onLoginSuccess();
             return const Navigation();
           },
         );

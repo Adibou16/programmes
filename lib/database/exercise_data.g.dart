@@ -17,7 +17,7 @@ class ExerciseDataAdapter extends TypeAdapter<ExerciseData> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ExerciseData(
-      exerciseName: fields[0] as String?,
+      exerciseName: fields[0] as String,
       imagePath: fields[1] as String,
       tableData: (fields[2] as List)
           .map((dynamic e) => (e as List).cast<int>())
