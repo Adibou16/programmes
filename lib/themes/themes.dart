@@ -7,6 +7,36 @@ import 'package:programmes/themes/theme_extensions.dart';
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.white, 
+
+  textTheme: const TextTheme(
+    headlineLarge: TextStyle(
+      fontSize: AppThemeValues.xLargeFont,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    ),
+
+    headlineMedium: TextStyle(
+      fontSize: AppThemeValues.largeFont,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    ),
+
+    bodyLarge: TextStyle(
+      fontSize: AppThemeValues.largeFont,
+      color: Colors.black,
+    ),
+
+    bodyMedium: TextStyle(
+      fontSize: AppThemeValues.mediumFont,
+      color: Colors.black,
+    ),
+
+    bodySmall: TextStyle(
+      fontSize: AppThemeValues.smallFont,
+      color: Colors.black,
+    ),
+  ),
+
   appBarTheme: AppBarTheme(
     centerTitle: true,
     backgroundColor: Colors.grey.shade300, 
@@ -18,6 +48,7 @@ ThemeData lightMode = ThemeData(
     ),
     elevation: 0,
   ),
+
 
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     backgroundColor: Colors.grey.shade300,
@@ -48,13 +79,14 @@ ThemeData lightMode = ThemeData(
   colorScheme: ColorScheme.light(
     surface: Colors.grey.shade400, 
     primary: Colors.blue,
+    error: Colors.red
   ),
   
   extensions: [
     AppColors(
-      tableHeader: Colors.grey.shade800,
-      tableText: Colors.grey.shade700,
-      tableBorder: Colors.grey.shade900,
+      header: Colors.grey.shade800,
+      text: Colors.grey.shade700,
+      border: Colors.grey.shade900,
     ),
   ],
 );
@@ -63,7 +95,36 @@ ThemeData lightMode = ThemeData(
 // DARK MODE
 ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor: Colors.black, 
+  scaffoldBackgroundColor: Colors.black,
+
+  textTheme: const TextTheme(
+    headlineLarge: TextStyle(
+      fontSize: AppThemeValues.xLargeFont,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+
+    headlineMedium: TextStyle(
+      fontSize: AppThemeValues.largeFont,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+    ),
+
+    bodyLarge: TextStyle(
+      fontSize: AppThemeValues.largeFont,
+      color: Colors.white,
+    ),
+
+    bodyMedium: TextStyle(
+      fontSize: AppThemeValues.mediumFont,
+      color: Colors.white,
+    ),
+
+    bodySmall: TextStyle(
+      fontSize: AppThemeValues.smallFont,
+      color: Colors.white,
+    ),
+  ), 
 
   appBarTheme: AppBarTheme(
     centerTitle: true,
@@ -106,13 +167,14 @@ ThemeData darkMode = ThemeData(
   colorScheme: ColorScheme.dark(
     surface: Colors.grey.shade900, 
     primary: Colors.blue,
+    error: Colors.red
   ),
 
   extensions: [
     AppColors(
-      tableHeader: Colors.grey.shade300,
-      tableText: Colors.grey.shade200,
-      tableBorder: Colors.grey.shade700,
+      header: Colors.grey.shade300,
+      text: Colors.grey.shade200,
+      border: Colors.grey.shade700,
     ),
   ],
 );

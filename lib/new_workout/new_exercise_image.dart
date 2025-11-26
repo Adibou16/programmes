@@ -63,14 +63,14 @@ class _NewExerciseImageState extends State<NewExerciseImage> {
       children: [
         TextField(
           controller: nameController,
-          style: TextStyle(color: colors.tableText),
+          style: TextStyle(color: colors.text),
           decoration: InputDecoration(
             constraints: BoxConstraints(maxWidth: width * 0.35),
             labelText: 'Nom',
             isDense: true,
-            labelStyle: TextStyle(color: colors.tableHeader, fontSize: width * 0.045),
+            labelStyle: TextStyle(color: colors.header, fontSize: width * 0.045),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: colors.tableBorder),
+              borderSide: BorderSide(color: colors.border),
             ),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),

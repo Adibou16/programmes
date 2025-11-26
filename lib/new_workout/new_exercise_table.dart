@@ -55,9 +55,9 @@ class _NewExerciseTableState extends State<NewExerciseTable> {
     final width = MediaQuery.of(context).size.width;
     final colors = Theme.of(context).extension<AppColors>()!;
 
-    final titleStyle = TextStyle(color: colors.tableHeader, fontSize: width * 0.035);
-    final headingStyle = TextStyle(color: colors.tableHeader, fontWeight: FontWeight.bold, fontSize: width * 0.03, overflow: TextOverflow.ellipsis);
-    final dataStyle = TextStyle(color: colors.tableText, fontSize: width * 0.03);
+    final titleStyle = TextStyle(color: colors.header, fontSize: width * 0.035);
+    final headingStyle = TextStyle(color: colors.header, fontWeight: FontWeight.bold, fontSize: width * 0.03, overflow: TextOverflow.ellipsis);
+    final dataStyle = TextStyle(color: colors.text, fontSize: width * 0.03);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,7 +73,7 @@ class _NewExerciseTableState extends State<NewExerciseTable> {
 
           return Table(
             columnWidths: columnWidths,
-            border: TableBorder.all(width: 1.0, color: colors.tableBorder),
+            border: TableBorder.all(width: 1.0, color: colors.border),
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             children: [
               // Header row

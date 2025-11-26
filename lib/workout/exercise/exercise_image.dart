@@ -38,7 +38,7 @@ class _ExerciseImageState extends State<ExerciseImage> {
             child: Text(
               imageName,
               maxLines: 2,
-              style: TextStyle(color: colors.tableHeader),
+              style: TextStyle(color: colors.header),
             ),
           ),
         ),

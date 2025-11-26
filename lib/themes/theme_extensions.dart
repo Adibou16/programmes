@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AppColors extends ThemeExtension<AppColors> {
-  final Color tableHeader;
-  final Color tableText;
-  final Color tableBorder;
+  final Color header;
+  final Color text;
+  final Color border;
 
   const AppColors({
-    required this.tableHeader,
-    required this.tableText,
-    required this.tableBorder,
+    required this.header,
+    required this.text,
+    required this.border,
   });
 
   @override
@@ -18,9 +18,9 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? tableBorder,
   }) {
     return AppColors(
-      tableHeader: tableHeader ?? this.tableHeader,
-      tableText: tableText ?? this.tableText,
-      tableBorder: tableBorder ?? this.tableBorder,
+      header: tableHeader ?? header,
+      text: tableText ?? text,
+      border: tableBorder ?? border,
     );
   }
 
@@ -28,9 +28,9 @@ class AppColors extends ThemeExtension<AppColors> {
   AppColors lerp(ThemeExtension<AppColors>? other, double t) {
     if (other is! AppColors) return this;
     return AppColors(
-      tableHeader: Color.lerp(tableHeader, other.tableHeader, t)!,
-      tableText: Color.lerp(tableText, other.tableText, t)!,
-      tableBorder: Color.lerp(tableBorder, other.tableBorder, t)!,
+      header: Color.lerp(header, other.header, t)!,
+      text: Color.lerp(text, other.text, t)!,
+      border: Color.lerp(border, other.border, t)!,
     );
   }
 }

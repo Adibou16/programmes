@@ -4,13 +4,13 @@ part 'exercise_data.g.dart';
 
 @HiveType(typeId: 1)
 class ExerciseData {
-  @HiveField(2)
-  final String? exerciseName;
-
   @HiveField(0)
-  final String imagePath;
+  final String exerciseName;
 
   @HiveField(1)
+  final String imagePath;
+
+  @HiveField(2)
   final List<List<int>> tableData;
 
   ExerciseData({
@@ -18,4 +18,22 @@ class ExerciseData {
     required this.imagePath,
     required this.tableData,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      "exerciseName": exerciseName,
+      "imagePath": imagePath,
+      "tableData": tableData.map((row) => {"row": row}).toList(),
+    };
+  }
+
+  static ExerciseData fromMap(Map<String, dynamic> map) {
+    return ExerciseData(
+      exerciseName: map["exerciseName"],
+      imagePath: map["imagePath"],
+      tableData: (map["tableData"] as List)
+          .map((e) => List<int>.from(e["row"]))
+          .toList(),
+    );
+  }
 }

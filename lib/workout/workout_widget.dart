@@ -1,105 +1,120 @@
 import 'package:flutter/material.dart';
-import 'package:programmes/new_workout/new_workout_second.dart';
-import 'package:programmes/workout/exercise/exercise_card.dart';
-import 'package:programmes/database/boxes.dart';
+import 'package:programmes/database/workout_repository.dart';
 import 'package:programmes/database/workout.dart';
 import 'package:programmes/database/exercise_data.dart';
-
+import 'package:programmes/workout/exercise/exercise_card.dart';
+import 'package:programmes/new_workout/new_workout_second.dart';
 
 class WorkoutWidget extends StatefulWidget {
-  final List<ExerciseData> exercises;
-  final String workoutKey; 
+  final String workoutId;
   final String name;
 
-  const WorkoutWidget({super.key, required this.exercises, required this.workoutKey, required this.name});
+  const WorkoutWidget({super.key, required this.workoutId, required this.name});
 
   @override
   State<WorkoutWidget> createState() => _WorkoutWidgetState();
 }
 
 class _WorkoutWidgetState extends State<WorkoutWidget> {
-  @override
+  final WorkoutRepository _repo = WorkoutRepository();
+  Workout? _workout;
+  bool _isLoading = true;
 
-  Widget build(BuildContext context) {
-    var exercises = widget.exercises;
-    final workoutKey = widget.workoutKey;
-    final name = widget.name;
-    final Workout? workout = boxWorkouts.get(workoutKey);
-    
-    if (workout == null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.pop(context);
+  @override
+  void initState() {
+    super.initState();
+    _loadWorkout();
+  }
+
+  Future<void> _loadWorkout() async {
+    final w = await _repo.getWorkoutById(widget.workoutId);
+
+    if (w == null) {
+      if (mounted) Navigator.pop(context);
+    } else {
+      setState(() {
+        _workout = w;
+        _isLoading = false;
       });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading || _workout == null) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
-    
-    final String description = workout.description;
-    
+
+    final exercises = _workout!.exercises;
+    final description = _workout!.description;
+    final name = widget.name;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
- 
-        actions: <Widget> [
+        actions: [
           CircleAvatar(
             backgroundColor: Colors.blue,
             child: IconButton(
               icon: const Icon(Icons.edit, color: Colors.black),
               onPressed: () {
                 showDialog(
-                  context: context, 
-                  builder: (context) => AlertDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
                     title: const Text("Modifier programme d'entrainement"),
                     content: Text('Voulez-vous modifier "$name"?'),
                     actions: [
-                      MaterialButton(
-                        onPressed: () => Navigator.pop(context), 
-                        child: const Text('Non')
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Non'),
                       ),
-
-                      MaterialButton(
+                      TextButton(
                         onPressed: () {
                           if (exercises.isEmpty) {
-                            exercises =  [ExerciseData(
+                            exercises.add(ExerciseData(
                               exerciseName: 'no name',
                               imagePath: 'exercise_images/other;/null.jpg',
-                              tableData: [[0, 0, 0, 0]]
-                            )];
+                              tableData: [[0, 0, 0, 0]],
+                            ));
                           }
                           Navigator.pop(context);
                           Navigator.push(
-                            context, 
+                            context,
                             MaterialPageRoute(
-                              builder: (context) => NewWorkoutSecond(
-                                name: name, 
-                                description: description, 
-                                weeks: exercises[0].tableData.length, 
+                              builder: (_) => NewWorkoutSecond(
+                                name: name,
+                                description: description,
+                                weeks: exercises[0].tableData.length,
                                 exercises: exercises,
-                              )
+                              ),
                             ),
                           );
-                        }, 
-                        child: const Text('Modifier', style: TextStyle(color: Colors.blue))
+                        },
+                        child: const Text('Modifier', style: TextStyle(color: Colors.blue)),
                       ),
                     ],
-                  )
+                  ),
                 );
               },
             ),
           ),
         ],
       ),
-
-
       body: ListView.builder(
         itemCount: exercises.length,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
+          final e = exercises[index];
           return ExerciseCard(
-            exerciseName: exercises[index].exerciseName ?? exercises[index].imagePath.split('/').last.split('.').first,
-            imagePath: exercises[index].imagePath,
-            tableData: exercises[index].tableData,
+            exerciseName: e.exerciseName.isNotEmpty
+                ? e.exerciseName
+                : e.imagePath.split('/').last.split('.').first,
+            imagePath: e.imagePath,
+            tableData: e.tableData,
+            workoutId: widget.workoutId,
+            exerciseIndex: index,
           );
         },
       ),

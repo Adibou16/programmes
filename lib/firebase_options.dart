@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:706687409855:android:b7b4ab16a654c3acd7300a',
     messagingSenderId: '706687409855',
     projectId: 'programmes-cebb0',
+    databaseURL: 'https://programmes-cebb0-default-rtdb.firebaseio.com',
     storageBucket: 'programmes-cebb0.firebasestorage.app',
   );
 
@@ -62,7 +63,9 @@ class DefaultFirebaseOptions {
     appId: '1:706687409855:ios:b9f5e6cb7551cd11d7300a',
     messagingSenderId: '706687409855',
     projectId: 'programmes-cebb0',
+    databaseURL: 'https://programmes-cebb0-default-rtdb.firebaseio.com',
     storageBucket: 'programmes-cebb0.firebasestorage.app',
     iosBundleId: 'com.example.programmes',
   );
+
 }
