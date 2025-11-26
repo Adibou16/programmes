@@ -16,15 +16,12 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  
   Future<void> logout() async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      final repo = WorkoutRepository();
-      await repo.closeForLogout(); // safely closes the box and cancels listeners
-    }
-
+    final repo = WorkoutRepository();
+    await repo.closeForLogout();
     await FirebaseAuth.instance.signOut();
-    Navigator.pop(context);
+    if (mounted) Navigator.pop(context);
   }
 
   @override
