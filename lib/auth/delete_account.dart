@@ -61,7 +61,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
               style: textTheme.headlineMedium,
             ),
         
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
         
             // Email
             TextField(

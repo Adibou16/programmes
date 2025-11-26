@@ -108,7 +108,8 @@ class _ExerciseTableState extends State<ExerciseTable> {
                 widget.workoutId!,
                 widget.exerciseIndex!,
                 rowIndex,
-                newVal,
+                3,
+                newVal
               );
             },
           ),

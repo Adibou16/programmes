@@ -5,25 +5,46 @@ import 'package:programmes/auth/welcome_page.dart';
 import 'package:programmes/widgets/navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:programmes/database/workout_repository.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:programmes/database/workout.dart';
 
-
-class AuthLayout extends StatelessWidget {
+class AuthLayout extends StatefulWidget {
   final Widget? pageIfNotConnected;
 
   const AuthLayout({super.key, this.pageIfNotConnected});
 
-  void onLoginSuccess() async {
+  @override
+  State<AuthLayout> createState() => _AuthLayoutState();
+}
+
+class _AuthLayoutState extends State<AuthLayout> {
+  User? _lastUser;
+  bool _loading = false;
+
+  Future<void> _onLoginSuccess(User user) async {
+    if (_loading) return; 
+    _loading = true;
+
+    if (_lastUser != null && _lastUser!.uid != user.uid) {
+      await Hive.box<Workout>('workoutBox_${_lastUser!.uid}').close();
+    }
+
+    _lastUser = user;
+
     final repo = WorkoutRepository();
 
-    await repo.downloadWorkouts();
+    await Hive.openBox<Workout>('workoutBox_${user.uid}');
 
+    await repo.downloadWorkouts();
     repo.liveSync();
+
+    _loading = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: authService, 
+      valueListenable: authService,
       builder: (context, auth, child) {
         return StreamBuilder<User?>(
           stream: authService.value.authStateChanges,
@@ -38,11 +59,14 @@ class AuthLayout extends StatelessWidget {
               return const VerifyEmail();
             }
 
-            onLoginSuccess();
+            if (_lastUser?.uid != user.uid) {
+              _onLoginSuccess(user);
+            }
+
             return const Navigation();
           },
         );
-      }
+      },
     );
   }
 }

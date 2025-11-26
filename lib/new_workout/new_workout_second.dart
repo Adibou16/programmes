@@ -41,7 +41,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
     if (widget.exercises != null && widget.exercises!.isNotEmpty) {
       for (final exerciseData in widget.exercises!) {
         addExerciseCardWithData(
-          exerciseData.exerciseName ?? exerciseData.imagePath.split('/').last.split('.').first, 
+          exerciseData.exerciseName, 
           exerciseData.imagePath, 
           exerciseData.tableData
         );
@@ -136,7 +136,7 @@ class _NewWorkoutSecondState extends State<NewWorkoutSecond> {
                             );
 
                           final repo = WorkoutRepository();
-                          await repo.uploadWorkout(key, workout);
+                          await repo.uploadWorkout(workout);
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

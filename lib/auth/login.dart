@@ -58,6 +58,8 @@ class _LoginState extends State<Login> {
                 style: textTheme.headlineLarge
               ),
 
+              const SizedBox(height: 20),
+
               // Email
               TextField(
                 controller: emailController,

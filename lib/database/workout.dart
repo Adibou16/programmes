@@ -23,22 +23,25 @@ class Workout {
     required this.description, 
     required this.exercises
   });
+
+  factory Workout.fromMap(Map<String, dynamic> map) {
+    return Workout(
+      id: map['id'],
+      title: map['title'] ?? "",
+      description: map['description'] ?? "",
+      exercises: (map['exercises'] as List<dynamic>? ?? [])
+          .map((e) => ExerciseData.fromMap(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id,
+      "title": title,
+      "description": description,
+      "exercises": exercises.map((e) => e.toMap()).toList(),
+    };
+  }
 }
 
-extension WorkoutMapper on Workout {
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "title": title,
-    "description": description,
-    "exercises": exercises.map((e) => e.toMap()).toList(),
-  };
-
-  static Workout fromMap(Map<String, dynamic> map) => Workout(
-    id: map["id"],
-    title: map["title"],
-    description: map["description"],
-    exercises: (map["exercises"] as List)
-        .map((e) => ExerciseData.fromMap(Map<String, dynamic>.from(e)))
-        .toList(),
-  );
-}

@@ -68,7 +68,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 style: textTheme.headlineMedium,
               ),
           
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
           
               // Email
               TextField(

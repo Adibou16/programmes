@@ -57,7 +57,7 @@ class _RegisterState extends State<Register> {
                 style: textTheme.headlineLarge,
               ),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
 
               // Email
               TextField(

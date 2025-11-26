@@ -36,9 +36,9 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextField(
-                controller: descriptionController,
+                controller: titleController,
                 decoration: InputDecoration(
-                  labelText: 'Description du workout',
+                  labelText: 'Nom du workout',
                   labelStyle: textTheme.bodyMedium,
                   filled: true,
                   border: OutlineInputBorder(
@@ -51,9 +51,9 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
               const SizedBox(height: 20.0),
           
               TextField(
-                controller: titleController,
+                controller: descriptionController,
                 decoration: InputDecoration(
-                  labelText: 'Nom du workout',
+                  labelText: 'Description du workout',
                   labelStyle: textTheme.bodyMedium,
                   filled: true,
                   border: OutlineInputBorder(
@@ -62,7 +62,6 @@ class _NewWorkoutFirstState extends State<NewWorkoutFirst> {
                   ),
                 ),
               ),
-          
               const SizedBox(height: 30),
           
               Center(

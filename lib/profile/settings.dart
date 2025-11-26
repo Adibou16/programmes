@@ -5,23 +5,33 @@ import 'package:programmes/auth/change_password.dart';
 import 'package:programmes/auth/change_username.dart';
 import 'package:programmes/auth/delete_account.dart';
 import 'package:programmes/auth/reset_password.dart';
+import 'package:programmes/database/workout_repository.dart';
 
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   const Settings({super.key});
 
-  void logout() async {
-    try {
-      await authService.value.signOut();
-    } on FirebaseException catch (e) {
-      print(e.message);
+  @override
+  State<Settings> createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
+  Future<void> logout() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final repo = WorkoutRepository();
+      await repo.closeForLogout(); // safely closes the box and cancels listeners
     }
+
+    await FirebaseAuth.instance.signOut();
+    Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     const padding = EdgeInsets.all(8.0);
+
 
     Widget _buildSettingItem({required String title, required Widget page, required TextStyle? textTheme}) {
       return ListTile(
@@ -104,7 +114,6 @@ class Settings extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   logout();
-                  Navigator.pop(context);
                 },
                 child: Text(
                   "Logout",
