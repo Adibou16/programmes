@@ -79,6 +79,7 @@ ThemeData lightMode = ThemeData(
   colorScheme: ColorScheme.light(
     surface: Colors.grey.shade400, 
     primary: Colors.blue,
+    error: Colors.red
   ),
   
   extensions: [
@@ -166,7 +167,7 @@ ThemeData darkMode = ThemeData(
   colorScheme: ColorScheme.dark(
     surface: Colors.grey.shade900, 
     primary: Colors.blue,
-    error: Colors.redAccent
+    error: Colors.red
   ),
 
   extensions: [

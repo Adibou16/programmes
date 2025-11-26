@@ -1,10 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:programmes/auth/login.dart';
 import 'package:programmes/auth/register.dart';
+import 'package:programmes/auth/auth_service.dart';
+
 
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
+
+  void login() async {
+    await authService.value.signIn(email: 'filalbert16@gmail.com', password: '234567');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +53,21 @@ class WelcomePage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Register())),
-                  child: Text(
-                    "Créer un compte",
-                    style: textTheme.bodyMedium,
-                  ),
+              TextButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Register())),
+                child: Text(
+                  "Créer un compte",
+                  style: textTheme.bodyMedium,
+                ),
+              ),
+              
+              const SizedBox(height: 20),
+
+              if (kDebugMode) TextButton (
+                onPressed: () => login(),
+                child: Text(
+                  "Connecter comme administrateur",
+                  style: textTheme.bodyMedium?.copyWith(color: Colors.amber),
                 ),
               ),
             ],

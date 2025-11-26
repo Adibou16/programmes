@@ -102,7 +102,10 @@ class Settings extends StatelessWidget {
             Padding(
               padding: padding,
               child: GestureDetector(
-                onTap: () => logout(),
+                onTap: () {
+                  logout();
+                  Navigator.pop(context);
+                },
                 child: Text(
                   "Logout",
                   style: textTheme.bodyMedium?.copyWith(color: Colors.redAccent)
