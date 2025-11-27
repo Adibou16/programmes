@@ -61,7 +61,7 @@ ThemeData lightMode = ThemeData(
     contentTextStyle: const TextStyle(color: Colors.black),
   ),
 
-  dialogTheme: DialogTheme(
+  dialogTheme: DialogThemeData(
     backgroundColor: Colors.grey.shade300,
     titleTextStyle: const TextStyle(
       color: Colors.black, 
@@ -71,7 +71,7 @@ ThemeData lightMode = ThemeData(
     contentTextStyle: const TextStyle(color: Colors.black)
   ),
 
-  cardTheme: CardTheme(
+  cardTheme: CardThemeData(
     color: Colors.grey.shade300,
     surfaceTintColor: Colors.transparent
   ),
@@ -149,7 +149,7 @@ ThemeData darkMode = ThemeData(
     contentTextStyle: const TextStyle(color: Colors.white),
   ),
 
-  dialogTheme: DialogTheme(
+  dialogTheme: DialogThemeData(
     backgroundColor: Colors.grey.shade900,
     titleTextStyle: const TextStyle(
       color: Colors.white, 
@@ -159,7 +159,7 @@ ThemeData darkMode = ThemeData(
     contentTextStyle: const TextStyle(color: Colors.white)
   ),
 
-  cardTheme: CardTheme(
+  cardTheme: CardThemeData(
     color: Colors.grey.shade900,
     surfaceTintColor: Colors.transparent
   ),
