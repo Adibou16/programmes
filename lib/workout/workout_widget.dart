@@ -55,6 +55,11 @@ class _WorkoutWidgetState extends State<WorkoutWidget> {
       appBar: AppBar(
         title: Text(name),
         actions: [
+          IconButton( 
+            icon: const Icon(Icons.upload),
+            onPressed: () {},
+          ),
+
           CircleAvatar(
             backgroundColor: Colors.blue,
             child: IconButton(
